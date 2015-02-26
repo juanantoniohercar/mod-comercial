@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-prueba de notificacion
+prueba de notificac
   <div class="jumbotron boxlogin">  
     <form action="iniciosesion.asp" method="POST" name="form_login" id="form_login">
       <img src="img/moneleg.gif" class="img-responsive" alt="Responsive image" hspace="50px"> 
