@@ -127,7 +127,7 @@
 	
  	<div class="form-group col-lg-3">
  		<label for="telefono">Tel&eacutefono</label>
- 		<input type="text" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value='<%=request.querystring("tlf_cli")%>'>
+ 		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value='<%=request.querystring("tlf_cli")%>'>
  	</div>
  	<div class="form-group col-lg-12"><br>
  		<h3>Contacto</h3>
@@ -143,7 +143,7 @@
 	</div>
 	<div class="form-group col-lg-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="text" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>'>
+ 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>'>
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="email_cto">E-mail</label>
