@@ -138,7 +138,7 @@
 	</div>
 	<div class="form-group col-lg-5">
 		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
-		<label for="nombre_cto">Nombre</label>
+		<label for="nombre_cto">Nombr</label>
 		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>'>
 	</div>
 	<div class="form-group col-lg-3">
