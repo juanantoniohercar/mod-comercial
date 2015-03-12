@@ -1,20 +1,23 @@
+
 <%
 
 	'funcion para generar codigo automático para una tabla
-	function generar_cod(tabla,num)
-		'table --> nombre tabla, num --> num que inicializa el id
-		dim count,objRS
-		count = "select count(*) from " & tabla
-		set objRS = conexion.Execute(count)
-		if objRS(0) = 0 then
-			'Si la tabla esta vacia aquí genera el codigo de la tabla automaticamente con el numero que le hemos pasado a traves de la funcion
-	    	num = num
-	    else
-	   		'Generar codigo si ya hay algun dato introducido en la tabla
-	    	num = num + objRS(0)
-	    end if
-	    set objRS = nothing
-	    generar_cod = num
+	function generar_cod(tabla,id)
+		dim SQL_consultaid
+		SQL_consultaid = "select * from " & tabla
+		set RS_consultaid = createobject("ADODB.Recordset")
+		RS_consultaid.open SQL_consultaid,Conexion
+
+		do while not RS_consultaid.eof
+			identificador = RS_consultaid(id)
+			RS_consultaid.movenext
+		loop
+			RS_consultaid.close
+		
+	    cod = identificador + 1
+	    response.write cod
+
+	
 	end function
 
 	'funcion para insertar cliente en la base de datos

@@ -22,7 +22,7 @@
 
 	<div class="form-group col-lg-2">
 		<label for="codigo_cliente">C&oacutedigo Cliente</label>
-		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=generar_cod("CLI",100)%>" readonly>
+		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=generar_cod("CLI","cli_id")%>" readonly>
 	</div> 
 	<div class="form-group col-lg-2">
 		<label for="cif">C. I. F.</label>
@@ -137,7 +137,7 @@
 		</button>
 	</div>
 	<div class="form-group col-lg-5">
-		<input type="hidden" value="<%=generar_cod("CLI_CTO",1)%>" name="id_cto">
+		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
 		<label for="nombre_cto">Nombre</label>
 		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>'>
 	</div>
