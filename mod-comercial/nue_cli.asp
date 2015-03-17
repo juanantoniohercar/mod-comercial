@@ -12,9 +12,9 @@
 	<!--#include file="menu.html"-->
 	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
-	
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container">
-	<h3>Nuevo Cliente</h3>
+	<h3>Nuevo Client</h3>
 	<hr color="DFDCDC">
 <form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
 
@@ -26,15 +26,15 @@
 	</div> 
 	<div class="form-group col-lg-2">
 		<label for="cif">C. I. F.</label>
-		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value='<%=request.querystring("cif")%>'>
+		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value='<%=request.querystring("cif")%>' required>
 	</div> 
 	<div class="form-group col-lg-5">
 		<label for="nombre">Nombre</label>
-		<input type="text" class="form-control" id="nombre" placeholder="NOMBRE" maxlength="50" name="nombre" value='<%=request.querystring("nombre")%>'>
+		<input type="text" class="form-control" id="nombre" placeholder="NOMBRE" maxlength="50" name="nombre" value='<%=request.querystring("nombre")%>' required>
 	</div>
 	<div class="form-group col-lg-6">
 		<label for="direccion">Direcci&oacuten</label>
-		<input type="text" class="form-control" id="direccion" placeholder="DIRECCIÓN" maxlength="100" name="direccion" value='<%=request.querystring("direccion")%>'>
+		<input type="text" class="form-control" id="direccion" placeholder="DIRECCIÓN" maxlength="100" name="direccion" value='<%=request.querystring("direccion")%>' required>
 	</div>
 	
 	<div class="form-group col-lg-4">
@@ -127,7 +127,7 @@
 	
  	<div class="form-group col-lg-3">
  		<label for="telefono">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value='<%=request.querystring("tlf_cli")%>'>
+ 		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value='<%=request.querystring("tlf_cli")%>' required>
  	</div>
  	<div class="form-group col-lg-12"><br>
  		<h3>Contacto</h3>
@@ -139,11 +139,11 @@
 	<div class="form-group col-lg-5">
 		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
 		<label for="nombre_cto">Nombr</label>
-		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>'>
+		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>' required>
 	</div>
 	<div class="form-group col-lg-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>'>
+ 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>' required>
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="email_cto">E-mail</label>
