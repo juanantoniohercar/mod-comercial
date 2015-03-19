@@ -1,7 +1,61 @@
+
+<!--#include file="connectionbd.asp"-->
+<!--#include file ="funciones.asp"-->
 <%
-public function busqueda()
 
+function busqueda()
+dim dnicif, nombre, domicilio, localidad, SQL_busclis, conversion
+dnicif=request.form("bus_dnicif")
+nombre=request.form("bus_nombre")
+domicilio=request.form("bus_dom")
+localidad=request.form("bus_localidad")
 
+if dnicif <> "" then
+	SQL_buscli="select * from CLI where cli_cif='"&dnicif&"'"
+	set RS_buscli = createobject("ADODB.Recordset")
+	RS_buscli.open SQL_buscli, Conexion
+	
+	'Funcion para crear trabla de busqueda'
+	creartabla_bus(RS_buscli)
 
+	elseif nombre <> "" then
+	SQL_buscli="select * from CLI where cli_nombre='"&nombre&"'"
+	set RS_buscli = createobject("ADODB.Recordset")
+	RS_buscli.open SQL_buscli, Conexion
+	
+	'Función para crear trbala de busqueda'
+	creartabla_bus(RS_buscli)
+
+	elseif domicilio <> "" then
+	SQL_buscli="select * from CLI where cli_dir='"&domicilio&"'"
+	set RS_buscli = createobject("ADODB.Recordset")
+	RS_buscli.open SQL_buscli, Conexion
+	
+	'Función para crear trbala de busqueda'
+	creartabla_bus(RS_buscli)
+
+	elseif localidad <> "" then
+	SQL_buscli="select * from POB, CLI where CLI.cli_pob=POB.pob_id AND POB.pob_nombre='"&localidad&"'"
+	set RS_buscli = createobject("ADODB.Recordset")
+	RS_buscli.open SQL_buscli, Conexion
+
+	'Función para crear trbala de busqueda'
+	creartabla_bus(RS_buscli)
+else
+%>
+	
+	<table border=3 class="table table-striped">
+		<thead>
+  			<tr>
+  				<th>Nombre</th>
+  				<th>Telefono</th>
+  				<th>Domicilio</th>
+  				<th>OPCIONES</th>
+  			</tr>
+  		</thead>
+  		</table>
+<%
+end if
 end function
 %>
+
