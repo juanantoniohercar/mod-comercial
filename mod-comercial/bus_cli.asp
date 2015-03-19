@@ -50,11 +50,11 @@
 	<div class="form-group col-lg-4">
 		<label for="filtro">Filtro</label>
 		<select class="form-control" id="cbb_filtro" onchange="mostrar(this);">
-  				<option value="0" >Seleccione un filtro para la busqueda</option>
-  				<option value="dni/cif" >DNI/CIF</option>
+ 				<option value="0" >Seleccione un filtro para la busqueda</option>
+ 				<option value="dni/cif" >DNI/CIF</option>
  	 			<option value="nombre">Nombre</option>
-  				<option value="domicilio">Domicilio</option>
-  				<option value="localidad">Localidad</option>
+ 				<option value="domicilio">Domicilio</option>
+ 				<option value="localidad">Localidad</option>
 			</select>
 	</div>
 	<div class="form-group"></div>

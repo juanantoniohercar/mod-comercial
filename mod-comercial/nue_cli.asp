@@ -12,9 +12,9 @@
 	<!--#include file="menu.html"-->
 	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
-	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
+	<% 'if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container">
-	<h3>Nuevo Client</h3>
+	<h3>Nuevo Cliente</h3>
 	<hr color="DFDCDC">
 <form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
 
@@ -138,7 +138,7 @@
 	</div>
 	<div class="form-group col-lg-5">
 		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
-		<label for="nombre_cto">Nombr</label>
+		<label for="nombre_cto">Nombre</label>
 		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>' required>
 	</div>
 	<div class="form-group col-lg-3">

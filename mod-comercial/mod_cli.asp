@@ -2,10 +2,10 @@
 <html>
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-        <title>Gesti&oacuten Comercia - Login</title>
-        <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
-        <link href="css/login.css" rel="stylesheet" type="txt/css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Gesti&oacuten Comercia - Login</title>
+		<link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
+		<link href="css/login.css" rel="stylesheet" type="txt/css">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gesti&oacuten Comercia - Inicio</title>
 	
 	</script>
@@ -17,11 +17,11 @@
 	<% 'if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<%
 		id_cli=request.querystring("id")
-
+		id_prov=request.querystring("provincia")
 		 call datos_cli(id_cli, "CLI")
-		 response.write prov
-		 response.write idprov
+		idprov = CStr(idprov)
 		 
+		
 	%>
 <div class="container">
 	<h3>Cliente a modificar</h3>
@@ -48,16 +48,12 @@
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="provi" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value">
-  			<option value=0>Seleccione una provincia</option>
-  			
+		<select class="form-control" id="provi" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value + '&mostrar=' + 1">
+ 			<option value=0 label="Seleciona una provincia"></option>
+ 			<option value="<%=idprov%>" selected><%=prov%></option>
 
-  			<%
-
-
-
-
-	  			SQL_prov="select * from PROV order by prov_nom asc"
+ 			<%
+	 			SQL_prov="select * from PROV order by prov_nom asc"
 				set RS_prov=createobject("ADODB.Recordset")
 				RS_prov.open SQL_prov,Conexion
 				
@@ -67,53 +63,40 @@
 				p = request.querystring("prov_nom")
 				response.write p
 				
-				    if p <> "" then
-				    	if p = prov_nom then
-				    	
-					    response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
-					   
-				        elseif p <> prov_nom then
-				        response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
-				        end if
-					else
+				if prov <> prov_nom then
+					if p = prov_nom then
+						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
+					elseif p <>prov_nom then
 						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
 					end if
-				
+				else
+					
+				end if
 				RS_prov.movenext
 				loop
 				RS_prov.close
-				
 
-
-					'if idprov = prov_id and prov = prov_nom then
-					 'response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
-				    	'if p <> "" then
-				    		'if p = prov_nom then
-					   		 'response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
-				        'elseif p <> prov_nom then
-				       'else
-				        
-				        	'end if
-					'else
-						'response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
-						'end if
-					'else
-					'response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" >"&prov_nom&"</option>"
-					'end if
-				
 			%>
 		</select>
 			
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select class="form-control" id="pob" name="poblacion" onchange="location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value">
-			<option >Seleccione una poblaci&oacuten</option>
+		<select title= "Seleccione una poblacion" class="form-control" id="pob" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value">
+			<option value=0 label="Seleciona una población"></option>
 			
 			<% 
+				espacios=Server.URLEncode(pob)
+				if request.querystring("mostrar") = "0" then
+					response.write"<option value="&idpob&" selected>"&pob&"</option>"
+				else
+					idpob = ""
+					pob = ""
+				end if
+				
 				if request.querystring("provincia") <> "" then
 
-		 		SQL_pob="select * from POB where pob_prov="&request.querystring("provincia")&"order by pob_nombre asc"
+		 		SQL_pob="select * from POB where pob_prov='"&request.querystring("provincia")&"'order by pob_nombre asc"
 				set RS_pob=createobject("ADODB.Recordset")
 				RS_pob.open SQL_pob,Conexion
 
@@ -123,29 +106,28 @@
 				pob_id=RS_pob("pob_id")
 				pp = request.querystring("pob_nombre")
 				
-				    if pp <> "" then
-				    	if pp = pob_nombre then
-					    response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
-				        elseif pp <> pob_nombre then
-				        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
-				        end if
-					else
-					response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
-					end if
-		
-  				RS_pob.movenext
-  				loop
-  				RS_pob.close
-  				end if
+				if pob <> pob_nombre then
+					if pp = pob_nombre then
+						response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
+					elseif pp <>pob_nombre then
+						response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
+					end if	 
+				
+ 				end if
 
-  			%>	
+				RS_pob.movenext
+
+ 				loop
+ 				RS_pob.close
+ 				end if
+ 				
+ 			%>	
 		</select>	
 	</div>
 			<%
 				
 				if request.querystring("poblacion") <> "" then
 
-				
 				SQL_cp= "select pob_cp from POB where pob_id="&request.querystring("poblacion")
 				set RS_cp=createobject("ADODB.Recordset")
 				RS_cp.open SQL_cp,Conexion
@@ -154,12 +136,12 @@
 				pob_cp=RS_cp("pob_cp")
 				RS_cp.movenext
 				loop
-  				RS_cp.close
-				end if	
+ 				RS_cp.close				
+ 				end if	
 			%>
 	<div class="form-group col-lg-3">
 		<label for="codigo_postal">C&oacutedigo Postal</label>
-		<input type="text" class="form-control" id="codigo_postal" name="cp" placeholder="CP" maxlength="5"  value="<%=pob_cp%>" disabled>
+		<input type="text" class="form-control" id="codigo_postal" name="cp" placeholder="CP" maxlength="5" value="<%=pob_cp%>" disabled>
 	</div>
 	
  	<div class="form-group col-lg-3">
@@ -170,12 +152,12 @@
  		<h3>Contacto a modificar</h3>
 		<hr class="" color="DFDCDC">
 		<button type="button" class="btn btn-success btn-xs" onclick="">
-    		<span class="glyphicon glyphicon-plus-sign"></span>
+ 		<span class="glyphicon glyphicon-plus-sign"></span>
 		</button>
 	</div>
 	<div class="form-group col-lg-5">
 		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
-		<label for="nombre_cto">Nombr</label>
+		<label for="nombre_cto">Nombre</label>
 		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>' required>
 	</div>
 	<div class="form-group col-lg-3">

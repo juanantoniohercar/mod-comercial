@@ -46,14 +46,14 @@ else
 	
 	<table border=3 class="table table-striped">
 		<thead>
-  			<tr>
-  				<th>Nombre</th>
-  				<th>Telefono</th>
-  				<th>Domicilio</th>
-  				<th>OPCIONES</th>
-  			</tr>
-  		</thead>
-  		</table>
+ 			<tr>
+ 				<th>Nombre</th>
+ 				<th>Telefono</th>
+ 				<th>Domicilio</th>
+ 				<th>OPCIONES</th>
+ 			</tr>
+ 		</thead>
+ 		</table>
 <%
 end if
 end function

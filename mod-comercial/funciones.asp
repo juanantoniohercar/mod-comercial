@@ -16,8 +16,8 @@
 		loop
 			RS_consultaid.close
 		
-	    cod = identificador + 1
-	    response.write cod
+	 	cod = identificador + 1
+	 	response.write cod
 
 	
 	end function
@@ -58,45 +58,56 @@
 	
 		<table border=3 class="table table-striped">
 		<thead>
-  			<tr>
-  				<th>Nombre</th>
-  				<th>Telefono</th>
-  				<th>Domicilio</th>
-  				<th>OPCIONES</th>
-  			</tr>
-  		</thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Telefono</th>
+				<th>Domicilio</th>
+				<th>OPCIONES</th>
+			</tr>
+		</thead>
  	
-  	<%
+	<%
 	do while not rs.eof
 		
 		cli_id = rs("cli_id")
 		cli_nombre = rs("cli_nombre")
 		cli_dir = rs("cli_dir")
 		cli_tlf = rs("cli_tlf")
+		cli_prov = rs("cli_prov")
+		cli_pob = rs("cli_pob")
 		
 		rs.movenext
 	%>
-  		<tbody>
+		<tbody>
 
-  			<tr>
-  				<td><%=cli_nombre%></td>
-  				<td><%=cli_tlf%></td>
-  				<td><%=cli_dir%></td>
-  				<td>
-	  				<form name="form_modificar" action="mod_cli.asp" method="get">
-	  					<input type="hidden" name="id" value="<%=cli_id%>">
-	  					<button type="submit" class="btn btn-primary btn-xs">
-	    					<span class="glyphicon glyphicon-pencil"></span>
+			<tr>
+				<td><%=cli_nombre%></td>
+				<td><%=cli_tlf%></td>
+				<td><%=cli_dir%></td>
+				<td>
+					<div class="pull-left">
+					<form name="form_modificar" action="mod_cli.asp" method="get">
+						<input type="hidden" name="id" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" value="0">
+						<button type="submit" class="btn btn-primary btn-xs">
+	 						<span class="glyphicon glyphicon-pencil"></span>
 						</button>
 					</form>
-					<button type="submit" class="btn btn-success btn-xs">
-						<a class="enlace" href="abrir_cli.asp"><span class="glyphicon glyphicon-open"></span></a>
-					</button>
+					</div>
+					
+					<form name="form_listar" class="form-horizontal" action ="abrir_cli.asp" method="get">
+						<button type="submit" class="btn btn-success btn-xs">
+							<span class="glyphicon glyphicon-open"></span>
+						</button>
+					</form>
+
 					<button type="button" class="btn btn-danger btn-xs">
-    					<span class="glyphicon glyphicon-remove-circle"></span>
+ 					<span class="glyphicon glyphicon-remove-circle"></span>
 					</button>
 				</td>
-  			</tr>
+			</tr>
 
 		
 	<%
