@@ -9,6 +9,7 @@
 	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
 <body>
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">

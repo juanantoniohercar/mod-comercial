@@ -3,6 +3,8 @@
 <!--#include file ="funciones.asp"-->
 <%
 
+if session("autorizacion") <> 1 then response.redirect("Default.asp") end if
+
 function busqueda()
 dim dnicif, nombre, domicilio, localidad, SQL_busclis, conversion
 dnicif=request.form("bus_dnicif")

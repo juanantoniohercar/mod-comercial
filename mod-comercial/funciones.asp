@@ -1,7 +1,37 @@
 <html>
-<head></head>
+<head>
+	<link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
+	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			setTimeout(function() {
+				$(".contenedor").fadeOut(1000);
+			},1500);
+		});
+	</script>
+</head>
 </body>
 <%
+
+	'metodo para autorizar entrar a una pagina si se ha iniciado sesión o no
+	sub autorizar(autorizacion)
+		if autorizacion <> 1 then response.redirect("Default.asp") end if
+	end sub
+
+	'funcion alert para cuando para informar que se realizo correctamente la acción
+	sub alert_formularios(texto,tipo_alert)
+	%>
+		<div class="notifications bottom-right alert alert-<%=tipo_alert%> contenedor">
+		<button type="button" class="close btn-xs" data-dismiss="alert">&times;</button>
+		<strong><%=texto%></strong>
+		</div>
+	<%
+	end sub
+
+	'funcion alert para cuando para informar que no se pudo realizar la acción
+	function alert_danger()
+		response.write("")
+	end function
 
 	'funcion para generar codigo automático para una tabla
 	function generar_cod(tabla,id)
@@ -24,32 +54,33 @@
 
 	'funcion para insertar cliente en la base de datos
 	function insertar_cliente(id_cli,cli_cif,cli_nom,cli_prov,cli_pob,cli_dir,cli_tlf,cto_id,cto_nom,cto_tlf,cto_mail)
+
+		
 		dim ins_cli,ins_cto
-		if id_cli = " " or cli_cif = " " or cli_nom = " " or cli_prov = "Seleccione una población" or cli_pob = "Seleccione una población" or cli_dir = " " or cli_tlf = " " or cto_nom = " " or cto_tlf = " " or cto_mail = " " then
-			response.write("<script language='javascript'>alert('ATENCION! Rellenar todos los campos');</script>")
+		if id_cli = "" or cli_cif = "" or cli_nom = "" or cli_prov = "" or cli_pob = "" or cli_dir = "" or cli_tlf = "" then
+			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
 			ins_cli = "insert into CLI values ("&id_cli&",'"&cli_cif&"','"&cli_nom&"',"&cli_prov&","&cli_pob&",'"&cli_dir&"','"&cli_tlf&"')"
 			ins_cto = "insert into CLI_CTO values ("&cto_id&","&id_cli&",'"&cto_nom&"','"&cto_tlf&"','"&cto_mail&"')"
-			response.write(ins_cli)
-			response.write("--")
-			response.write(ins_cto)
+			
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
 			conexion.Execute(ins_cli)
 			'Si error es nivel distinto de cero nos mostrara mensaje de error, si el nivel es cero continua con introducir los datos del contacto
 			if err <> 0 then
-				response.write("<script language='javascript'>alert('ERROR! No se pudo introducir los datos en la base de datos');</script>")
+				alert_formularios "ERROR! No se pueden introducir los datos en la base de datos","danger"
 			else
 				on error resume next
 				conexion.Execute(ins_cto)
 				'Si nivel de error distinto de cero mostrar mensaje de error, si nivel indicara que se han introducido los datos correctamente
 				if err <> 0 then
-					response.write("<script language='javascript'>alert('ATENCION! No se pudo introducir los datos de los contactos');</script>")		
+					alert_formularios "ERROR! No se pueden introducir los datos de los contactos en la base de datos","danger"		
 				else
-					response.write("<script language='javascript'>alert('Datos introducidos satisfactoriamente en la base de datos');</script>")		
+					alert_formularios "DATOS INTRODUCIDOS CORRECTAMENTE","success"
 				end if 
 			end if		
-		end if 
+		end if
+		
 	end function
 
 	'Crea la tabla con los resultado de busqueda cliente'

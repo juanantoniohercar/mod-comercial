@@ -13,6 +13,7 @@
 </head>
 <body>
 	<!--#include file="menu.html"-->
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container"></div>
 	<button onclick="window.location.href='nue_cli.asp'" class="btn btn-lg col-lg-12">
     		<span class="glyphicon glyphicon-user"> Nuevo Cliente</span>

@@ -9,6 +9,7 @@
 	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
 <body>
+  <% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<!--#include file="menu.html"-->
 <div class="container">
 <form action="#" method="POST" name="form_busq_visitas" id="form_busq_visitas" class="form-horizontal" role="form">

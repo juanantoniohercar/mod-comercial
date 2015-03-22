@@ -7,6 +7,7 @@
    <meta http-equiv="refresh" content="2;URL=nue_cli.asp">
 </head> 
 <body> 
+  <progress id="barra_progreso">
 <% 
   Dim cod_cli,cif_cli,nom_cli,dir_cli,prov_cli,pob_cli,tlf_cli,id_cto,nom_cto,telf_cto,correo_cto,cad_prov,cad_pob
   cod_cli = request.form("codigo_cliente")
@@ -37,6 +38,8 @@
 
   call insertar_cliente(cod_cli,cif_cli,nom_cli,prov_cli,pob_cli,dir_cli,tlf_cli,id_cto,nom_cto,tlf_cto,correo_cto)
 %>
+
+  </progress>
 </table> 
 </body> 
 </html> 

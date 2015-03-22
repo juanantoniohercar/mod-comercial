@@ -10,6 +10,7 @@
 </head>
 <body>
 	<!--#include file="menu.html"-->
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container">
 	<div class="form-group col-lg-12"><br>
 		<button type="submit" class="btn btn-default btn-sm pull-right">

@@ -14,7 +14,7 @@
 	<!--#include file="menu.html"-->
 	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
-	<% 'if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<%
 		id_cli=request.querystring("id")
 		id_prov=request.querystring("provincia")

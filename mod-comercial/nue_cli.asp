@@ -12,11 +12,11 @@
 	<!--#include file="menu.html"-->
 	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
-	<% 'if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
+	<% autorizar session("autorizacion") %>
 <div class="container">
 	<h3>Nuevo Cliente</h3>
 	<hr color="DFDCDC">
-<form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
+<form action="nue_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
 
 	
 
@@ -139,11 +139,11 @@
 	<div class="form-group col-lg-5">
 		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
 		<label for="nombre_cto">Nombre</label>
-		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>' required>
+		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>'>
 	</div>
 	<div class="form-group col-lg-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>' required>
+ 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>'>
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="email_cto">E-mail</label>
@@ -154,6 +154,35 @@
 	</div>
 </form>
 
+<%
+	
+'response.write("<progress id='barra_progreso'>")
+
+Dim cod_cli,cif_cli,nom_cli,dir_cli,prov_cli,pob_cli,tlf_cli,id_cto,nom_cto,telf_cto,correo_cto,cad_prov,cad_pob
+cod_cli = request.form("codigo_cliente")
+cif_cli = request.form("cif")
+nom_cli = request.form("nombre")
+dir_cli = request.form("direccion")
+cad_prov = cstr(request.form("provincia"))
+cad_prov = split(cad_prov,"&")
+
+prov_cli = cad_prov(0)
+prov_cli = cstr(prov_cli)
+cad_pob = cstr(request.form("poblacion"))
+cad_pob = split(cad_pob,"&")
+
+pob_cli = cad_pob(0)
+pob_cli = cstr(pob_cli)
+tlf_cli = request.form("tlf_cli")
+id_cto = request.form("id_cto")
+nom_cto = request.form("nombre_cto")
+tlf_cto = request.form("tlf_cto")
+correo_cto = request.form("email_cto")
+
+call insertar_cliente(cod_cli,cif_cli,nom_cli,prov_cli,pob_cli,dir_cli,tlf_cli,id_cto,nom_cto,tlf_cto,correo_cto)
+
+'response.write("</progress>")
+%>
 
 </div>
 </body>

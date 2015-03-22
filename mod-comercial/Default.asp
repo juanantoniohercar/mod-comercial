@@ -14,7 +14,7 @@
     <form action="iniciosesion.asp" method="POST" name="form_login" id="form_login">
       <img src="img/moneleg.gif" class="img-responsive" alt="Responsive image" hspace="50px"> 
         <label>Nombre Usuario:</label>    
-        <input type="text" name="username" size="10" maxlength="50" class="form-control">
+        <input type="text" name="username" size="10" maxlength="50" class="form-control" autofocus>
         <label>Contraseña:</label>
         <input type="password" name="password" maxlength="9" class="form-control">
         <input type="submit" name="login" value="Iniciar" class="btn btn-success">

@@ -40,7 +40,7 @@
 <body onload=document.getElementById("form_busqueda_cli").reset();>
 	<!--#include file="menu.html"-->
 	<!--#include file="busqueda_cli.asp"-->
-
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 
 
 <div class="container">
