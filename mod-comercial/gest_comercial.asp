@@ -9,7 +9,7 @@
 	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
 <body>
-	<!--#include file="menu.html"-->
+	<!--#include file="menu.asp"-->
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container">
 <form action="#" method="POST" name="form_gest_com" id="form_gest_com" class="form-horizontal" role="form">
@@ -33,8 +33,8 @@
     			<span class="glyphicon glyphicon-search"></span>
 			</button>
 			<button type="button" class="btn btn-success">
-    		<a class="enlace" href="nue_cli"><span class="glyphicon glyphicon-plus-sign"></span></a>
-		</button>
+    		<a class="enlace" href="nue_cli.asp"><span class="glyphicon glyphicon-plus-sign"></span></a>
+			</button>
 		</div>
 	</div>
 	<div class="form-group col-lg-5">

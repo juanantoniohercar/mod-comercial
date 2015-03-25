@@ -6,11 +6,24 @@
    <title></title>
    <link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
   <script src="jquery-2.1.3.min.js" type="text/javascript"></script>
-   <meta http-equiv="refresh" content="2;URL=nue_cli.asp">
    <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
+   <script language="JavaScript">
+  function redireccionar() {
+    setTimeout("location.href='mod_cli.asp?id=' + form_modificar_cli.codigo_cliente.value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + 'mostrar=' + 0", 3000);
+  }
+  </script>
 </head> 
 <body>
   <!--#include file="menu.asp"-->
+  <%
+    id_cli=request.querystring("id")
+    id_prov=request.querystring("provincia")
+     call datos_cli_cto(id_cli, "CLI")
+    idprov = CStr(idprov)
+     
+    
+  %>
+  
   <div class="progress progress-striped active">
   <div class="progress-bar" role="progressbar"
        aria-valuenow="45" aria-valuemin="20" aria-valuemax="100"
@@ -19,7 +32,7 @@
   </div>
 </div>
 <% 
-  Dim cod_cli,cif_cli,nom_cli,dir_cli,prov_cli,pob_cli,tlf_cli,id_cto,nom_cto,telf_cto,correo_cto,cad_prov,cad_pob
+  Dim cod_cli,cif_cli,nom_cli,dir_cli,prov_cli,pob_cli,tlf_cli,cad_prov,cad_pob
   cod_cli = request.form("codigo_cliente")
   cif_cli = request.form("cif")
   nom_cli = request.form("nombre")
@@ -35,13 +48,8 @@
   pob_cli = cad_pob(0)
   pob_cli = cstr(pob_cli)
   tlf_cli = request.form("tlf_cli")
-  id_cto = request.form("id_cto")
-  nom_cto = request.form("nombre_cto")
-  tlf_cto = request.form("tlf_cto")
-  correo_cto = request.form("email_cto")
-  
 
-  call insertar_cliente(cod_cli,cif_cli,nom_cli,prov_cli,pob_cli,dir_cli,tlf_cli,id_cto,nom_cto,tlf_cto,correo_cto)
+  call modificar_cli(cod_cli,cif_cli,nom_cli,prov_cli,pob_cli,dir_cli,tlf_cli)
 %>
 
 

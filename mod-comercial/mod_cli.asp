@@ -6,36 +6,54 @@
 		<link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
 		<link href="css/login.css" rel="stylesheet" type="txt/css">
  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
 	<title>Gesti&oacuten Comercia - Inicio</title>
-	
+	<script type="text/javascript">
+		function mostrar_btn_add(){
+			
+				document.getElementById('anadir_contacto').style.display = 'block';
+				document.getElementById('modificar_contacto').style.display = 'none';
+				document.getElementById('nombre_cto').disabled = true;
+
+		}
+
+		function mostrar_btn_mod(){
+			
+				document.getElementById('anadir_contacto').style.display = 'none';
+				document.getElementById('modificar_contacto').style.display = 'block';
+				document.getElementById('nombre_cto').disabled = false;
+		
+		}
+
+		function cargar(){
+   		location.reload();
+		}
 	</script>
+	
 </head>
-<body>
-	<!--#include file="menu.html"-->
+<body >
+	<!--#include file="menu.asp"-->
 	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<%
 		id_cli=request.querystring("id")
 		id_prov=request.querystring("provincia")
-		 call datos_cli(id_cli, "CLI")
+		 call datos_cli_cto(id_cli, "CLI")
 		idprov = CStr(idprov)
-		 
-		
 	%>
 <div class="container">
 	<h3>Cliente a modificar</h3>
 	<hr color="DFDCDC">
-<form action="ins_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" >
+<form action="modificar_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" >
 
 	<div class="form-group col-lg-2">
 		<label for="codigo_cliente">C&oacutedigo Cliente</label>
-		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=cod%>" readonly>
+		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=cod%>" readonly required>
 	</div> 
 	<div class="form-group col-lg-2">
 		<label for="cif">C. I. F.</label>
-		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value="<%=dnicif%>"
-		 required>
+		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value="<%=dnicif%> " required>
 	</div> 
 	<div class="form-group col-lg-5">
 		<label for="nombre">Nombre</label>
@@ -48,7 +66,7 @@
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="provi" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value + '&mostrar=' + 1">
+		<select class="form-control" id="provi" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&mostrar=' + 1">
  			<option value=0 label="Seleciona una provincia"></option>
  			<option value="<%=idprov%>" selected><%=prov%></option>
 
@@ -82,7 +100,7 @@
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select title= "Seleccione una poblacion" class="form-control" id="pob" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&nombre_cto=' + form_modificar_cli.nombre_cto.value + '&tlf_cto=' + form_modificar_cli.tlf_cto.value + '&email_cto=' + form_modificar_cli.email_cto.value">
+		<select title= "Seleccione una poblacion" class="form-control" id="pob" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value">
 			<option value=0 label="Seleciona una población"></option>
 			
 			<% 
@@ -139,7 +157,7 @@
  				RS_cp.close				
  				end if	
 			%>
-	<div class="form-group col-lg-3">
+	<div class="form-group col-lg-2">
 		<label for="codigo_postal">C&oacutedigo Postal</label>
 		<input type="text" class="form-control" id="codigo_postal" name="cp" placeholder="CP" maxlength="5" value="<%=pob_cp%>" disabled>
 	</div>
@@ -148,30 +166,79 @@
  		<label for="telefono">Tel&eacutefono</label>
  		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value="<%=tlf%>" required>
  	</div>
- 	<div class="form-group col-lg-12"><br>
+	<div class="form-group col-lg-9">
+		<input type="submit" name="modificar_cliente" value="Modificar Cliente" class="btn btn-primary btn-lg">
+	</div>
+</form>
+<div class="form-group col-lg-12"><br>
  		<h3>Contacto a modificar</h3>
 		<hr class="" color="DFDCDC">
-		<button type="button" class="btn btn-success btn-xs" onclick="">
- 		<span class="glyphicon glyphicon-plus-sign"></span>
+		<button type="button" class="btn btn-primary btn-xs" onclick="mostrar_btn_mod()">
+ 		<span class="glyphicon glyphicon-pencil"> Modificar Contacto</span>
 		</button>
-	</div>
+		<button type="button" class="btn btn-success btn-xs" onclick="mostrar_btn_add()">
+ 		<span class="glyphicon glyphicon-plus-sign"> Añadir contacto</span>
+		</button>
+		
+</div>
+<div id="modificar_contacto">
+<form action="modificar_cto.asp" method="POST" name="form_modificar_cto" class="form-horizontal" >
+		<div class="form-group col-lg-5">
+		<label for="nombre_cto">Filtro por Nombre</label>
+		<div class="form-inline">
+		<select class="form-control" id="nombre_cto" name="nombre_cto" onchange= "location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&mostrar=' + 0 ">
+			<option value=0>Seleccione un contacto</option>
+			<%call select_cto()%>
+		</select>
+			
+			<button type="button" class="btn btn-warning" onclick="cargar()">
+ 					<span class="glyphicon glyphicon-refresh"></span>
+				</button>
+		</div>	
+		</div>
+	<% call datos_cto()%>
+	
+	<div class="form-group"></div>
 	<div class="form-group col-lg-5">
-		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
 		<label for="nombre_cto">Nombre</label>
-		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>' required>
+		<input type="hidden" name="idcontacto" value="<%=id_cont%>">
+	<input type="text" class="form-control" id="nombrecto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombrecto" value='<%=nombrecto%>'>
 	</div>
 	<div class="form-group col-lg-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>' required>
+ 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=tlf_cto%>'>
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="email_cto">E-mail</label>
-		<input type="email" class="form-control" id="email_cto" placeholder="email@ejemplo.com" name="email_cto" value='<%=request.querystring("email_cto")%>'>
+		<input type="email" class="form-control" id="email_cto" placeholder="email@ejemplo.com" name="email_cto" value='<%=email_cto%>'>
 	</div>
-	<div class="form-group col-lg-2">
-		<input type="submit" name="crear_cliente" value="Crear" class="btn btn-primary btn-lg">
+	<div class="form-group col-lg-9">
+		<input type="submit" name="modificar_contacto"  value="Modificar Contacto" class="btn btn-primary btn-lg" >
 	</div>
 </form>
+</div>
+
+<div id="anadir_contacto" style="display: none;">
+<form action="add_cto.asp" method="POST" name="form_add_cto" class="form-horizontal" >
+	<div class="form-group col-lg-5">
+		<label for="nombre_cto">Nombre</label>
+		<input type="hidden" name="idcontacto" value="<%=generar_cod("CLI_CTO","cto_id")%>">
+		<input type="hidden" name="idcontacto_cli" value="<%=id_cli%>">
+	<input type="text" class="form-control" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombcto" required>
+	</div>
+	<div class="form-group col-lg-3">
+		<label for="telefono_cto">Tel&eacutefono</label>
+ 		<input type="tel" class="form-control" placeholder="Teléfono o móvil" maxlength="9" name="telcto" >
+	</div>
+	<div class="form-group col-lg-4">
+		<label for="email_cto">E-mail</label>
+		<input type="email" class="form-control" placeholder="email@ejemplo.com" name="mailcto" >
+	</div>
+	<div class="form-group col-lg-9">
+		<input type="submit" name="anadir_contacto"  value="Añadir Contacto" class="btn btn-success btn-lg"  >
+	</div>
+</form>
+</div>
 </div>
 </body>
 </html>

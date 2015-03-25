@@ -12,7 +12,7 @@
 	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
 <body>
-	<!--#include file="menu.html"-->
+	<!--#include file="menu.asp"-->
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 <div class="container"></div>
 	<button onclick="window.location.href='nue_cli.asp'" class="btn btn-lg col-lg-12">
