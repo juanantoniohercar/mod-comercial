@@ -1,5 +1,3 @@
-
-<!--#include file="connectionbd.asp"-->
 <!--#include file ="funciones.asp"-->
 <%
 
@@ -21,7 +19,7 @@ if dnicif <> "" then
 	creartabla_bus(RS_buscli)
 
 	elseif nombre <> "" then
-	SQL_buscli="select * from CLI where cli_nombre='"&nombre&"'"
+	SQL_buscli="select * from CLI where cli_nom like '%"&nombre&"%'"
 	set RS_buscli = createobject("ADODB.Recordset")
 	RS_buscli.open SQL_buscli, Conexion
 	
@@ -29,7 +27,7 @@ if dnicif <> "" then
 	creartabla_bus(RS_buscli)
 
 	elseif domicilio <> "" then
-	SQL_buscli="select * from CLI where cli_dir='"&domicilio&"'"
+	SQL_buscli="select * from CLI where cli_dir like '%"&domicilio&"%'"
 	set RS_buscli = createobject("ADODB.Recordset")
 	RS_buscli.open SQL_buscli, Conexion
 	
@@ -37,7 +35,7 @@ if dnicif <> "" then
 	creartabla_bus(RS_buscli)
 
 	elseif localidad <> "" then
-	SQL_buscli="select * from POB, CLI where CLI.cli_pob=POB.pob_id AND POB.pob_nombre='"&localidad&"'"
+	SQL_buscli="select * from POB, CLI where CLI.cli_pob=POB.pob_id AND POB.pob_nom like '%"&localidad&"%'"
 	set RS_buscli = createobject("ADODB.Recordset")
 	RS_buscli.open SQL_buscli, Conexion
 

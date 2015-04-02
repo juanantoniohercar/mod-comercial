@@ -34,6 +34,10 @@
 			}
 		}
 
+		function abrir_cli(){
+			document.form_listar.submit();
+		}
+
 
 	</script>
 </head>
@@ -52,7 +56,7 @@
 		<select class="form-control" id="cbb_filtro" onchange="mostrar(this);">
  				<option value="0" >Seleccione un filtro para la busqueda</option>
  				<option value="dni/cif" >DNI/CIF</option>
- 	 			<option value="nombre">Nombre</option>
+ 	 			<option value="nombre" selected>Nombre</option>
  				<option value="domicilio">Domicilio</option>
  				<option value="localidad">Localidad</option>
 			</select>
@@ -61,7 +65,7 @@
 		<div class="form-group col-lg-2" style="display: none;" id="txt_dnicif">
 			<input type="text" class="form-control" placeholder="DNI CIF" id="dnicif" name="bus_dnicif" maxlength="9">
 		</div>
-		<div class="form-group col-lg-4" style="display: none;" id="txt_nombre">
+		<div class="form-group col-lg-4" id="txt_nombre">
 			<input type="text" class="form-control" placeholder="Nombre"  id="nombre" name="bus_nombre" maxlength="50">
 		</div>
 		<div class="form-group col-lg-5" style="display: none;" id="txt_domicilio">

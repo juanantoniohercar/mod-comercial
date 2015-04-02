@@ -1,7 +1,9 @@
+<!--#include file="connectionbd.asp"-->
 <html>
 <head>
 	<link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
 	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
+	<link href="link.css" rel="stylesheet" type="txt/css">
 	<script type="text/javascript">
 		$(document).ready(function() {
 			setTimeout(function() {
@@ -22,10 +24,59 @@
     		}
     		
 		}
+function abrir_cli(){
+			document.form_listar.submit();
+		}
 	</script>
 </head>
 </body>
 <%
+
+	'***************declaracion de variables***********************'
+	Dim consulta,objRS,nombre_usuario,password, SQL_idcomercial, SQL_comerciales, com_nom, com_id, SQL_bus_cli
+
+
+
+
+	'****************Fin declaracion de variables********************'
+
+	'funcion para autorizar el inicio de sesion'
+	
+	function iniciosesion ()
+  		nombre_usuario=request.form("username")
+  		password=request.form("password")
+
+		consulta = "select * from EMP"
+		set objRS = conexion.Execute(consulta)
+
+   		while (not objRS.Eof) 
+       		if objRS("emp_nom") = trim(nombre_usuario) and objRS("emp_pw") = trim(password) then
+       		'si todo es ok nos envia a otra pagina'
+       		SQL_idcomercial="select emp_id from EMP where emp_nom='"&nombre_usuario&"'"
+       		set RS_idcomercial=createobject("ADODB.Recordset")
+       		RS_idcomercial.open SQL_idcomercial,Conexion
+       		do while not RS_idcomercial.eof
+       			session("emp_id")=RS_idcomercial("emp_id")
+
+       		RS_idcomercial.movenext
+       		loop
+       		RS_idcomercial.close
+
+       		session	("nombre_comercial")=trim(request.form("username"))
+       		session("autorizacion")=1
+       		response.redirect("inicio.asp")
+       		response.end
+       		else
+       			'si no coincide los datos o no existen error'
+       			session("autorizacion")=-1
+       			alert_formularios "USUARIO O CONTRASEÑA NO VÁLIDOS","warning"
+
+       		end if
+      	objRS.MoveNext 
+   		wend
+
+   		set objRS = nothing 
+	end function
 
 	'metodo para autorizar entrar a una pagina si se ha iniciado sesión o no
 	sub autorizar(autorizacion)
@@ -115,7 +166,7 @@
 	do while not rs.eof
 		
 		cli_id = rs("cli_id")
-		cli_nombre = rs("cli_nombre")
+		cli_nombre = rs("cli_nom")
 		cli_dir = rs("cli_dir")
 		cli_tlf = rs("cli_tlf")
 		cli_prov = rs("cli_prov")
@@ -126,7 +177,16 @@
 		<tbody>
 
 			<tr>
-				<td><%=cli_nombre%></td>
+
+				<td>
+					<form name="form_list" action="abrir_cli.asp" method="get">
+						<input type="hidden" name="id" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" value="0">
+						<input class="enlace" type="submit" name="enlace_abrir" value="<%=cli_nombre%>">
+					</form>
+				</td>
 				<td><%=cli_tlf%></td>
 				<td><%=cli_dir%></td>
 				<td>
@@ -189,7 +249,7 @@
 	do while not RS_cli.eof
 		cod=RS_cli("cli_id")
 		dnicif=RS_cli("cli_cif")
-		nombre=RS_cli("cli_nombre")
+		nombre=RS_cli("cli_nom")
 		direccion=RS_cli("cli_dir")
 		tlf=RS_cli("cli_tlf")
 		
@@ -225,7 +285,7 @@
 
 	'recorremos POB y guardamos en variable
 	do while not RS_pob.eof
-	pob= RS_pob("pob_nombre")
+	pob= RS_pob("pob_nom")
 	cpostal=RS_pob("pob_cp")
 	idpob = RS_pob("pob_id")
 
@@ -476,6 +536,190 @@
   		</script>
   <%
 	end function
+
+	'funcion rellenar select asignacion de empleados'
+	function select_com()
+		SQL_comerciales="select * from EMP where emp_nom not like '"&session("nombre_comercial")&"'"
+		set RS_comerciales=createobject("ADODB.Recordset")
+		RS_comerciales.open SQL_comerciales,Conexion
+
+		do while not RS_comerciales.eof
+		com_id=RS_comerciales("emp_id")
+		com_nom=RS_comerciales("emp_nom")
+		com_nom_esp=Server.URLEncode(com_nom)
+		cadena = request.querystring("com_nom")
+
+					if com_id <> "" then
+						if cadena = com_nom then
+							response.write "<option value="&com_id&"&com_nom="&com_nom_esp&" selected>"&com_nom&"</option>"
+				   			elseif cadena <> com_nom then
+				        		response.write "<option value="&com_id&"&com_nom="&com_nom_esp&" >"&com_nom&"</option>"
+				   		 	end if
+						else
+							response.write "<option value="&com_id&"&com_nom="&com_nom_esp&">"&com_nom&"</option>"
+						end if
+
+			
+
+
+		RS_comerciales.movenext
+		loop
+		RS_comerciales.close
+
+	end function
+
+	'funcions busqueda clientes para gestion comercial'
+	public cli_id, cli_nom, cli_tlf, cto_id, cto_cli, cto_nom, cto_tlf, cto_mail, nombre_cliente
+	function bus_cliente()
+		nombre_cliente=request.querystring("bus_nomcli")
+		SQL_bus_cli="select * from CLI where cli_nom='"&nombre_cliente&"'"
+		set RS_bus_cli=createobject("ADODB.Recordset")
+		RS_bus_cli.open SQL_bus_cli,Conexion
+		
+		do while not RS_bus_cli.eof
+			cli_id=RS_bus_cli("cli_id")
+			cli_nom=RS_bus_cli("cli_nom")
+			cli_tlf=RS_bus_cli("cli_tlf")
+
+		RS_bus_cli.movenext
+		loop
+		RS_bus_cli.close
+	end function
+
+	'funcion para la busqueda del contacto para el cliente que vamos a realizar la visita'
+	function bus_cli_cto()
+				SQL_bus_cli_cto="select * from CLI_CTO where cto_cli='"&cli_id&"'"
+				set RS_bus_cli_cto= createobject("ADODB.Recordset")
+				RS_bus_cli_cto.open SQL_bus_cli_cto,Conexion
+				
+				do while not RS_bus_cli_cto.eof
+					cto_id=RS_bus_cli_cto("cto_id")
+					cto_cli=RS_bus_cli_cto("cto_cli")
+					cto_nom=RS_bus_cli_cto("cto_nom")
+					cto_nom_esp=Server.URLEncode(cto_nom)
+					cadena = request.querystring("cto_nom")
+
+					if cto_id <> "" then
+						if cadena = cto_nom then
+							response.write "<option value="&cto_id&"&cto_nom="&cto_nom_esp&" selected>"&cto_nom&"</option>"
+				   			elseif cadena <> cto_nom then
+				        		response.write "<option value="&cto_id&"&cto_nom="&cto_nom_esp&" >"&cto_nom&"</option>"
+				   		 	end if
+						else
+							response.write "<option value="&cto_id&"&cto_nom="&cto_nom_esp&">"&cto_nom&"</option>"
+						end if
+					
+					
+
+				RS_bus_cli_cto.movenext
+				loop
+				RS_bus_cli_cto.close
+	end function
+
+	'funcion para obtener los datos del contacto seleccionado'
+	function datos_cto_cli()
+				if request.querystring("contacto") <> "" then
+
+				SQL_datos_cli_cto= "select cto_tlf, cto_mail from CLI_CTO where cto_id="&request.querystring("contacto")
+				set RS_datos_cli_cto=createobject("ADODB.Recordset")
+				RS_datos_cli_cto.open SQL_datos_cli_cto,Conexion
+
+				do while not RS_datos_cli_cto.eof
+				cto_tlf=RS_datos_cli_cto("cto_tlf")
+				cto_mail=RS_datos_cli_cto("cto_mail")
+				RS_datos_cli_cto.movenext
+				loop
+ 				RS_datos_cli_cto.close				
+ 				end if
+
+	end function
+
+	'funcion para obtener los datos de la tabla ESTADO de la base de datos'
+	function select_est()
+		SQL_estado="select * from GES_COM_EST"
+		set RS_estado=createobject("ADODB.Recordset")
+		RS_estado.open SQL_estado,Conexion
+
+		do while not RS_estado.eof
+			est_id=RS_estado("gce_id")
+			est_nom	= RS_estado("gce_nom")
+			est_nom_esp=Server.URLEncode(est_nom)
+			cadena = request.querystring("est_nom")
+
+			if est_id <> "" then
+						if cadena = est_nom then
+							response.write "<option value="&est_id&"&est_nom="&est_nom_esp&" selected>"&est_nom&"</option>"
+				   			elseif cadena <> est_nom then
+				        		response.write "<option value="&est_id&"&est_nom="&est_nom_esp&" >"&est_nom&"</option>"
+				   		 	end if
+						else
+							response.write "<option value="&est_id&"&est_nom="&est_nom_esp&">"&est_nom&"</option>"
+						end if
+
+		RS_estado.movenext
+		loop
+		RS_estado.close
+
+
+
+	end function	
+
+	'funcion para buscar los presupuestos
+	function select_pre()
+
+		SQL_pre="select * from PRE where pre_cli='"&cli_id&"'"
+				set RS_pre= createobject("ADODB.Recordset")
+				RS_pre.open SQL_pre,Conexion
+				
+				do while not RS_pre.eof
+					pre_id=RS_pre("pre_id")
+					pre_cli=RS_pre("pre_cli")
+					cadena = request.querystring("presupuesto")
+					pre_id=cstr(pre_id)
+					if pre_id <> "" then
+						if cadena = pre_id then
+							response.write "<option value="&pre_id&" selected>"&pre_id&"</option>"
+				   			elseif cadena <> pre_id then
+				        		response.write "<option value="&pre_id&" >"&pre_id&"</option>"
+				   		 	end if
+						else
+							response.write "<option value="&pre_id&">"&pre_id&"</option>"
+						end if
+					
+					
+
+				RS_pre.movenext
+				loop
+				RS_pre.close
+
+	end function
+
+	'funcion para insertar datos en la tabla ges_com
+
+	function insert_gescom(gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des)
+
+
+		SQL_insert_gescom="insert into GES_COM values ("&gc_id&",'"&gc_hora&"','"&gc_fec&"',"&gc_est&","&gc_emp&","&gc_pre&","&gc_cli&","&gc_cli_cto&",'"&gc_des&"')"
+	
+		on error resume next
+		Conexion.Execute(SQL_insert_gescom)
+			'Si error es nivel distinto de cero nos mostrara mensaje de error, sino no mostrara mensaje de que se ha introducido correctamente el los datos en la base de datos
+			if err <> 0 then
+				alert_formularios "ERROR! No se pueden introducir los datos en la base de datos","danger"
+			else
+				alert_formularios "Datos de visita intrducidos correctamente","success"
+			end if	
+
+
+	end function
+
+	'funcion que realiza la busqueda de las visitas'
+	function bus_visita()
+		SQL_visitas=""
+
+
+	end function
+
 %>
 </body>
 </html>

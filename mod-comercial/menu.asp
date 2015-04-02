@@ -36,14 +36,10 @@
 				</li>
 				<li> <a href="gest_comercial.asp">Gesti&oacuten Comercial</a></li>
 				<li> <a href="gest_visitas.asp">Gesti&oacuten Visitas</a></li>
-				<li><button type="button" class="btn btn-danger" onclick='location.href="Default.asp"'>
- 					<span class="glyphicon glyphicon-remove"> Salir</span>
-					</button>
-				</li>
+				<li><a href="Default.asp">Salir</a></li>
+				
 			</ul>
 		</div>
 	</nav>
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

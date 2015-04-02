@@ -11,6 +11,7 @@
 <body>
   <% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<!--#include file="menu.asp"-->
+  <!--#include file="funciones.asp"-->
 <div class="container">
 <form action="#" method="POST" name="form_busq_visitas" id="form_busq_visitas" class="form-horizontal" role="form">
 	<div class="form-group col-lg-12">

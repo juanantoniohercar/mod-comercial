@@ -10,7 +10,6 @@
 </head>
 <body>
 	<!--#include file="menu.asp"-->
-	<!--#include file="connectionbd.asp"-->
 	<!--#include file="funciones.asp"-->
 	<% autorizar session("autorizacion") %>
 <div class="container">
@@ -76,12 +75,12 @@
 			<% 
 				if request.querystring("provincia") <> "" then
 
-		 		SQL_pob="select * from POB where pob_prov="&request.querystring("provincia")&"order by pob_nombre asc"
+		 		SQL_pob="select * from POB where pob_prov="&request.querystring("provincia")&"order by pob_nom asc"
 				set RS_pob=createobject("ADODB.Recordset")
 				RS_pob.open SQL_pob,Conexion
 
 				do while not RS_pob.eof
-				pob_nombre=RS_pob("pob_nombre")
+				pob_nombre=RS_pob("pob_nom")
 				cadena=Server.URLEncode(pob_nombre)
 				pob_id=RS_pob("pob_id")
 				pp = request.querystring("pob_nombre")

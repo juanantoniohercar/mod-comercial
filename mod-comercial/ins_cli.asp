@@ -1,6 +1,3 @@
-<!--#include file="connectionbd.asp"-->
-<!--#include file="funciones.asp"-->
-
 <html> 
 <head> 
    <title></title>
@@ -11,6 +8,7 @@
 </head> 
 <body>
   <!--#include file="menu.asp"-->
+  <!--#include file="funciones.asp"-->
   <div class="progress progress-striped active">
   <div class="progress-bar" role="progressbar"
        aria-valuenow="45" aria-valuemin="20" aria-valuemax="100"

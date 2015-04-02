@@ -14,7 +14,7 @@
 	
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
 	<!--#include file="funciones.asp"-->
-	<!--#include file="connectionbd.asp"-->
+	
 	<%
 		id_cli=request.querystring("id")
 		id_prov=request.querystring("provincia")

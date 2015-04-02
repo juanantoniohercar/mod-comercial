@@ -1,6 +1,3 @@
-<!--#include file="connectionbd.asp"-->
-<!--#include file="funciones.asp"-->
-
 <html> 
 <head> 
    <title></title>
@@ -15,6 +12,7 @@
 </head> 
 <body>
   <!--#include file="menu.asp"-->
+  <!--#include file="funciones.asp"-->
   <%
     id_cli=request.querystring("id")
     id_prov=request.querystring("provincia")
