@@ -24,9 +24,11 @@
     		}
     		
 		}
-function abrir_cli(){
+		function abrir_cli(){
 			document.form_listar.submit();
 		}
+
+	
 	</script>
 </head>
 </body>
@@ -714,11 +716,282 @@ function abrir_cli(){
 	end function
 
 	'funcion que realiza la busqueda de las visitas'
+	
 	function bus_visita()
-		SQL_visitas=""
+		visita_fecha1=request.form("busv_fecha1")
+		visita_fecha2=request.form("busv_fecha2")
+		cad_estado=request.form("busv_estado")
+		cad_estado=split(cad_estado, "&")
+		on error resume next
+		visita_estado=cad_estado(0)
+		visita_estado=cstr(visita_estado)
+		comercial=session("emp_id")
+
+
+		if visita_estado = 3 then
+			SQL_visitas="select CLI.cli_id, CLI_CTO.cto_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"'"
+				set RS_visitas=createobject("ADODB.Recordset")
+				RS_visitas.open SQL_visitas,Conexion
+
+			tabla_visitas(RS_visitas)
+
+			
+		else
+
+			SQL_visitas="select CLI.cli_id, CLI_CTO.cto_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM_EST.gce_id="&visita_estado&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"'"
+				set RS_visitas=createobject("ADODB.Recordset")
+				RS_visitas.open SQL_visitas,Conexion
+
+			tabla_visitas(RS_visitas)
+			
+		end if
+		
+	end function
+
+	'funcion que nos crea la tabla on los resultado de busqueda de las visitas'
+	function tabla_visitas(rs)
+	
+	%>
+	
+	
+		<table border=3 class="table table-striped">
+			<thead>
+  				<tr>
+          			<th>Estado</th>
+          			<th>Fecha Visita</th>
+          			<th>Hora Visita</th>
+  					<th>Cliente</th>
+          			<th>Dirección</th>
+  					<th>Nombre contacto</th>
+  					<th>Telefono</th>
+  					<th>E-mail</th>
+  					<th>Descripci&oacuten</th>
+  				</tr>
+  			</thead>
+  	<%
+  			
+
+  		do while not rs.eof
+  			cli_id=rs("cli_id")
+  			cto_id=rs("cto_id")
+  			gc_id=rs("gc_id")
+  			gce_nom=rs("gce_nom")
+  			gc_fec=rs("gc_fec")
+  			gc_hora=rs("gc_hora")
+  			cli_nom=rs("cli_nom")
+  			cli_dir=rs("cli_dir")
+  			cto_nom=rs("cto_nom")
+  			cto_tlf=rs("cto_tlf")
+  			cto_mail=rs("cto_mail")
+  			gc_des=rs("gc_des")
+
+  			rs.movenext
+  			
+  		
+  	%>
+  		<tbody>
+  			<%
+  				if gce_nom= "Pendiente" then
+  			%>
+
+  			<tr class="danger" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
+  				<td><%=gce_nom%><input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>"> </td>
+  				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
+  				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
+  				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>
+  				<td><%=cli_dir%></td>
+  				<td><%=cto_nom%><input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>"></td>
+  				<td><%=cto_tlf%></td>
+  				<td><%=cto_mail%></td>
+  				<td><%=gc_des%><textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea></td>
+
+  			</tr>
+  			<%
+  			end if
+  			if gce_nom= "Finalizada" then
+			%>
+			<tr class="success" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
+  				<td><%=gce_nom%><input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>"> </td>
+  				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
+  				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
+  				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>
+  				<td><%=cli_dir%></td>
+  				<td><%=cto_nom%><input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>"></td>
+  				<td><%=cto_tlf%></td>
+  				<td><%=cto_mail%></td>
+  				<td><%=gc_des%><textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea></td>
+  			</tr>
+  			<%
+  			end if
+  			%>
+
+
+
+  	<%
+  	loop
+  	%>
+		</tbody>	
+		</table>
+	
+	
+<%
+	rs.close
+	end function	
+
+	'funcion que carga los datos de la visita a modificar'
+	public cto_id_vi,gce_id_vi, gce_nom_vi, gc_fec_vi, gc_hora_vi, cli_nom_vi, cli_tlf_vi, cto_nom_vi, cto_tlf_vi, cto_mail_vi, gc_des_vi, gc_pre_vi, cli_id_vi
+	function datos_visita(id)
+
+		SQL_datos_visita="select CLI.cli_id, CLI_CTO.cto_id, CLI.cli_tlf, GES_COM.gc_pre, GES_COM.gc_id, GES_COM_EST.gce_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des, PRE.pre_id from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP, PRE where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id='"&session("emp_id")&"' and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and PRE.pre_id=GES_COM.gc_pre and gc_id='"&id&"'"
+		set RS_datos_visita=createobject("ADODB.Recordset")
+		RS_datos_visita.open SQL_datos_visita,Conexion
+
+		do while not RS_datos_visita.eof
+			cli_id_vi=RS_datos_visita("cli_id")
+			cto_id_vi=RS_datos_visita("cto_id")
+			gce_id_vi=RS_datos_visita("gce_id")
+			gce_nom_vi=RS_datos_visita("gce_nom")
+  			gc_fec_vi=RS_datos_visita("gc_fec")
+  			gc_hora_vi=RS_datos_visita("gc_hora")
+  			cli_nom_vi=RS_datos_visita("cli_nom")
+  			cli_tlf_vi=RS_datos_visita("cli_tlf")
+  			cto_nom_vi=RS_datos_visita("cto_nom")
+  			cto_tlf_vi=RS_datos_visita("cto_tlf")
+  			cto_mail_vi=RS_datos_visita("cto_mail")
+  			gc_des_vi=RS_datos_visita("gc_des")
+  			gc_pre_vi=RS_datos_visita("gc_pre")
+
+		RS_datos_visita.movenext
+		loop
+		RS_datos_visita.close
 
 
 	end function
+	'funcions para cargar los datos del contacto en el modificar visitas'
+
+	function select_cli_cto_vi()
+				
+				SQL_cli_cto_vi="select * from CLI_CTO where cto_cli="&cli_id_vi
+				set RS_cli_cto_vi=createobject("ADODB.Recordset")
+				RS_cli_cto_vi.open SQL_cli_cto_vi,Conexion
+				
+				do while not RS_cli_cto_vi.eof
+				cto_nom = RS_cli_cto_vi("cto_nom")
+				cto_id = RS_cli_cto_vi("cto_id")
+				p = request.querystring("cto_nom")
+				response.write p
+				
+				if cto_nom_vi <> cto_nom then
+					if p = cto_nom then
+						response.write "<option value="&cto_id&"&cto_nom="&cto_nom&" selected>"&cto_nom&"</option>"
+					elseif p <>cto_nom then
+						response.write "<option value="&cto_id&"&cto_nom="&cto_nom&">"&cto_nom&"</option>"
+					end if
+				else
+					
+				end if
+				RS_cli_cto_vi.movenext
+				loop
+				RS_cli_cto_vi.close
+
+	end function
+
+	'funcion para cargar el estado en el modificar visitas.'
+	function select_est_vi()
+		SQL_estado="select * from GES_COM_EST"
+		set RS_estado=createobject("ADODB.Recordset")
+		RS_estado.open SQL_estado,Conexion
+
+		do while not RS_estado.eof
+			est_id=RS_estado("gce_id")
+			est_nom	= RS_estado("gce_nom")
+			est_nom_esp=Server.URLEncode(est_nom)
+			cadena = request.querystring("est_nom")
+
+			if gce_nom_vi <> est_nom then
+						if cadena = est_nom then
+							response.write "<option value="&est_id&"&est_nom="&est_nom_esp&" selected>"&est_nom&"</option>"
+				   			elseif cadena <> est_nom then
+				        		response.write "<option value="&est_id&"&est_nom="&est_nom_esp&" >"&est_nom&"</option>"
+				   		 	end if
+						else
+							
+						end if
+
+		RS_estado.movenext
+		loop
+		RS_estado.close
+	end function
+
+	'funcion para cargar el presupuesto en el modificar visitas'
+	function select_pre_vi()
+
+		SQL_pre="select distinct pre_id from PRE where pre_cli="&cli_id_vi
+		set RS_pre= createobject("ADODB.Recordset")
+		RS_pre.open SQL_pre,Conexion
+				
+		do while not RS_pre.eof
+			pre_id=RS_pre("pre_id")
+			cadena = request.querystring("presupuesto")
+			id_cstr=cstr(pre_id)
+
+			if gc_pre_vi <> pre_id then
+				if cadena = id_cstr then
+					response.write "<option value="&pre_id&" selected>"&id_cstr&"</option>"
+		   			elseif cadena <> id_cstr then
+		        		response.write "<option value="&pre_id&" >"&id_cstr&"</option>"
+		   	 	end if
+			
+			end if
+					
+					
+
+				RS_pre.movenext
+				loop
+				RS_pre.close
+
+	end function
+
+	'funcion para modificar la visita'
+	function mod_visita(gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des)
+	if gc_id = "" or gc_fec = "" or gc_est = "" or gc_emp = "" or gc_cli = "" or gc_cli_cto = "" then
+			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
+		else
+			SQL_update_visita="update GES_COM set gc_hora='"&gc_hora&"', gc_fec='"&gc_fec&"', gc_est="&gc_est&", gc_emp="&gc_emp&", gc_pre="&gc_pre&", gc_cli="&gc_cli&", gc_cli_cto="&gc_cli_cto&", gc_des='"&gc_des&"' where gc_id="&gc_id
+			response.write SQL_update_visita
+			'Si hay un error en la base de datos permite continuar con la ejecucion del script
+			on error resume next
+			Conexion.Execute(SQL_update_visita)
+			'Si error es nivel distinto de cero nos mostrara mensaje de error, si el nivel es cero continua con introducir los datos del contacto
+			if err <> 0 then
+				alert_formularios "ERROR! No se pueden modificar los datos en la base de datos","danger"
+			else
+				on error resume next
+				Conexion.Execute(SQL_update_visita)
+				'Si nivel de error distinto de cero mostrar mensaje de error, si nivel indicara que se han introducido los datos correctamente
+				if err <> 0 then
+					alert_formularios "ERROR! No se pueden modificar los datos de la visita en la base de datos","danger"		
+				else
+
+					alert_formularios "DATOS MODIFICADOS CORRECTAMENTE","success"
+					
+				end if 
+			end if		
+		end if
+		%>
+			<script language="JavaScript">
+  				function redireccionar() {
+    				setTimeout('history.back()', 2500);
+
+  				}
+  					redireccionar();
+  			</script>
+		<%
+
+
+
+	end function
+
 
 %>
 </body>

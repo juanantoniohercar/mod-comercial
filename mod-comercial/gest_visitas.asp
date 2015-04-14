@@ -13,24 +13,23 @@
 	<!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
 <div class="container">
-<form action="#" method="POST" name="form_busq_visitas" id="form_busq_visitas" class="form-horizontal" role="form">
+<form action="gest_visitas.asp" method="POST" name="form_busq_visitas" id="form_busq_visitas" class="form-horizontal" role="form">
 	<div class="form-group col-lg-12">
  		<h3>Buscar Visitas</h3>
 		<hr class="" color="DFDCDC">
 	</div>
 	<div class="form-group form-inline col-lg-7">
 		<label>Fecha: DESDE</label>
-		<input type="date" class="form-control" id="fecha_desde" name="fecha">
+		<input type="date" class="form-control" id="busv_fecha1" name="busv_fecha1">
     <label> HASTA</label>
-    <input type="date" class="form-control" id="fecha_hasta" name="fecha">
+    <input type="date" class="form-control" id="busv_fecha2" name="busv_fecha2">
   </div>
   <div class="form-group form-inline">
     <label for="estado">Estado visita</label>
-    <select class="form-control" id="cbb_estado">
+    <select class="form-control" id="busv_estado" name="busv_estado">
           <option>Selecciona un estado</option>
-          <option value="" selected >Pendiente</option>
-          <option value="" >Finalizadas</option>
-          <option value="">Todas</option>
+          <% call select_est() %>
+          <option value="3">Todas</option>
       </select>
   </div>
   <div class="form-group col-lg-12">
@@ -45,55 +44,7 @@
 
   </div>
   <div class="form-group">
-		<table border=3 class="table table-striped">
-		<thead>
-  			<tr>
-          <th>Estado</th>
-          <th>Fecha Visita</th>
-  				<th>Empresa</th>
-          <th>Dirección</th>
-  				<th>Nombre contacto</th>
-  				<th>Telefono</th>
-  				<th>E-mail</th>
-  				<th>Descripci&oacuten</th>
-  			</tr>
-  		</thead>
-  		<tbody>
-  			<tr>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-          <td>.......</td>
-          <td>.......</td>
-  				<td>........................................................</td>
-  				
-  			</tr>
-  			<tr>
-  				<td>.......</td>
-  				<td>.......</td>
-          <td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-          <td>.........................................</td>
-  				
-  			</tr>
-  			<tr>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-          <td>.......</td>
-  				<td>.......</td>
-  				<td>.......</td>
-  				<td>......................</td>
-  			</tr>
-  			
-		</tbody>	
-		</table>
+    <%call bus_visita()%>
   </div>
 </div>
 </body>
