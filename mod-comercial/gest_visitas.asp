@@ -4,6 +4,7 @@
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
         <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
+        <link href="css/tableresponsive.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gesti&oacuten Comercia - Inicio</title>
@@ -41,9 +42,13 @@
   <div class="form-group">
  		<br><br><h3>Listado de Visitas</h3>
 		<hr class="" color="DFDCDC">
+    
 
   </div>
-  <div class="form-group">
+  <label ><font color="#6ABAD0">Finalizada</font></label>
+  <label >/</label>
+    <label ><font color="#FF4E4E">Pendiente</font></label>
+  <div class="form-group table-responsive">
     <%call bus_visita()%>
   </div>
 </div>

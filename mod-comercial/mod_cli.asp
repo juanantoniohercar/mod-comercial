@@ -6,29 +6,10 @@
 		<link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
 		<link href="css/login.css" rel="stylesheet" type="txt/css">
  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		<script type="text/javascript" src="js/funciones.js"></script>
  		<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
 	<title>Gesti&oacuten Comercia - Inicio</title>
-	<script type="text/javascript">
-		function mostrar_btn_add(){
-			
-				document.getElementById('anadir_contacto').style.display = 'block';
-				document.getElementById('modificar_contacto').style.display = 'none';
-				document.getElementById('nombre_cto').disabled = true;
-
-		}
-
-		function mostrar_btn_mod(){
-			
-				document.getElementById('anadir_contacto').style.display = 'none';
-				document.getElementById('modificar_contacto').style.display = 'block';
-				document.getElementById('nombre_cto').disabled = false;
-		
-		}
-
-		function cargar(){
-   		location.reload();
-		}
-	</script>
+	
 	
 </head>
 <body >
@@ -51,8 +32,8 @@
 		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=cod%>" readonly required>
 	</div> 
 	<div class="form-group col-lg-2">
-		<label for="cif">C. I. F.</label>
-		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value="<%=dnicif%> " required>
+		<label for="cif">N. I. F. / C. I. F.</label>
+		<input type="text" class="form-control" id="cif" placeholder="N. I. F. / C. I. F." maxlength="9" name="cif" value="<%=dnicif%> " onblur="comprobarNifCif(document.getElementById('cif').value)" required>
 	</div> 
 	<div class="form-group col-lg-5">
 		<label for="nombre">Nombre</label>

@@ -2,6 +2,7 @@
 <html>
 <head>
 	<link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
+	<link href="css/tableresponsive.css" rel="stylesheet" type="txt/css">
 	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
 	<link href="link.css" rel="stylesheet" type="txt/css">
 	<script type="text/javascript">
@@ -31,7 +32,7 @@
 	
 	</script>
 </head>
-</body>
+<body>
 <%
 
 	'***************declaracion de variables***********************'
@@ -115,15 +116,15 @@
 	end function
 
 	'funcion para insertar cliente en la base de datos
-	function insertar_cliente(id_cli,cli_cif,cli_nom,cli_prov,cli_pob,cli_dir,cli_tlf,cto_id,cto_nom,cto_tlf,cto_mail)
+	'funcion para insertar cliente en la base de datos
+	function insertar_cliente(id_cli,cli_cif,cli_nom,cli_prov,cli_pob,cli_dir,cli_tlf)
 
 		
-		dim ins_cli,ins_cto
+		dim ins_cli
 		if id_cli = "" or cli_cif = "" or cli_nom = "" or cli_prov = "" or cli_pob = "" or cli_dir = "" or cli_tlf = "" then
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
 			ins_cli = "insert into CLI values ("&id_cli&",'"&cli_cif&"','"&cli_nom&"',"&cli_prov&","&cli_pob&",'"&cli_dir&"','"&cli_tlf&"')"
-			ins_cto = "insert into CLI_CTO values ("&cto_id&","&id_cli&",'"&cto_nom&"','"&cto_tlf&"','"&cto_mail&"')"
 			
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
@@ -132,21 +133,34 @@
 			if err <> 0 then
 				alert_formularios "ERROR! No se pueden introducir los datos en la base de datos","danger"
 			else
-				if cto_nom = "" and cto_tlf = "" and cto_mail = ""  then
-				'alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
+				alert_formularios "DATOS INTRODUCIDOS CORRECTAMENTE","success"
+			end if		
+		end if
+		
+	end function
+
+	'Insertar contactos de nuevo cliente
+	function insertar_contactos(id_cto,id_cli,nom_cto,tlf_cto,correo_cto)
+		dim ins_cto
+		
+			
+			ins_cto = "insert into CLI_CTO values ("&id_cto&","&id_cli&",'"&nom_cto&"','"&tlf_cto&"','"&correo_cto&"')"
+			
+				if nom_cto = "" and tlf_cto = "" and correo_cto = ""  then
+					'alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 				else
-				on error resume next
-				Conexion.Execute(ins_cto)
+					on error resume next
+					Conexion.Execute(ins_cto)
 				end if
+				
 				'Si nivel de error distinto de cero mostrar mensaje de error, si nivel indicara que se han introducido los datos correctamente
 				if err <> 0 then
 						alert_formularios "ERROR! No se pueden introducir los datos de los contactos en la base de datos","danger"		
 				else
-					alert_formularios "DATOS INTRODUCIDOS CORRECTAMENTE","success"
+					alert_formularios "CONTACTOS INTRODUCIDOS CORRECTAMENTE","success"
 					 
 				end if
-			end if		
-		end if
+					
 		
 	end function
 
@@ -180,17 +194,17 @@
 
 			<tr>
 
-				<td>
+				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value">
 					<form name="form_list" action="abrir_cli.asp" method="get">
-						<input type="hidden" name="id" value="<%=cli_id%>">
-						<input type="hidden" name="provincia" value="<%=cli_prov%>">
-						<input type="hidden" name="poblacion" value="<%=cli_pob%>">
-	 					<input type="hidden" name="mostrar" value="0">
-						<input class="enlace" type="submit" name="enlace_abrir" value="<%=cli_nombre%>">
+						<input type="hidden" name="id" id="id" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" id="provincia" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" id="poblacion" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" id="mostrar" value="0">
 					</form>
+					<%=cli_nombre%>
 				</td>
-				<td><%=cli_tlf%></td>
-				<td><%=cli_dir%></td>
+				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value"><%=cli_tlf%></td>
+				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value"><%=cli_dir%></td>
 				<td>
 					<div class="pull-left">
 					<form name="form_modificar" action="mod_cli.asp" method="get">
@@ -404,7 +418,7 @@
 	if id_cli = "" or cli_cif = "" or cli_nom = "" or cli_prov = "" or cli_pob = "" or cli_dir = "" or cli_tlf = "" then
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
-			SQL_update_cli="update CLI set cli_cif='"&cli_cif&"', cli_nombre='"&cli_nom&"', cli_prov='"&cli_prov&"', cli_pob='"&cli_pob&"', cli_dir='"&cli_dir&"', cli_tlf='"&cli_tlf&"' where cli_id='"&id_cli&"'"
+			SQL_update_cli="update CLI set cli_cif='"&cli_cif&"', cli_nom='"&cli_nom&"', cli_prov='"&cli_prov&"', cli_pob='"&cli_pob&"', cli_dir='"&cli_dir&"', cli_tlf='"&cli_tlf&"' where cli_id='"&id_cli&"'"
 			
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
@@ -438,12 +452,12 @@
 	end function
 
 	'funcion modifica contacto '
-	function modificar_cto(cto_id,cto_nom,cto_tlf,cto_mail)
+	function modificar_cto(mod_cto_id,mod_cto_nom,mod_cto_tlf,mod_cto_mail)
 
-	if cto_nom = "" or cto_tlf = "" or cto_mail = "" then
+	if mod_cto_nom = "" or mod_cto_tlf = "" or mod_cto_mail = "" then
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
-			SQL_update_cto="update CLI_CTO set cto_nom='"&cto_nom&"', cto_tlf='"&cto_tlf&"', cto_mail='"&cto_mail&"' where cto_id='"&cto_id&"'"
+			SQL_update_cto="update CLI_CTO set cto_nom='"&mod_cto_nom&"', cto_tlf='"&mod_cto_tlf&"', cto_mail='"&mod_cto_mail&"' where cto_id='"&mod_cto_id&"'"
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
 			Conexion.Execute(SQL_update_cto)
@@ -476,11 +490,11 @@
 	end function
 
 	'funcion que añade un contacto a un cliente ya creado'
-	function add_cto(cto_id,id_cli,cto_nom,cto_tlf,cto_mail)
+	function add_cto(add_cto_id,add_cto_cli,add_cto_nom,add_cto_tlf,add_cto_mail)
 
-		SQL_insert_cto="insert into CLI_CTO values ("&cto_id&","&id_cli&",'"&cto_nom&"','"&cto_tlf&"','"&cto_mail&"')"
+		SQL_insert_cto="insert into CLI_CTO values ("&add_cto_id&","&add_cto_cli&",'"&add_cto_nom&"','"&add_cto_tlf&"','"&add_cto_mail&"')"
 		
-		if cto_nom = "" and cto_tlf = "" and cto_mail = ""  then
+		if add_cto_nom = "" and add_cto_tlf = "" and add_cto_mail = ""  then
 			
 		else
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
@@ -757,7 +771,7 @@
 		<table border=3 class="table table-striped">
 			<thead>
   				<tr>
-          			<th>Estado</th>
+          			<!--<th>Estado</th>-->
           			<th>Fecha Visita</th>
           			<th>Hora Visita</th>
   					<th>Cliente</th>
@@ -795,7 +809,8 @@
   			%>
 
   			<tr class="danger" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
-  				<td><%=gce_nom%><input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>"> </td>
+  				<!--<td><%=gce_nom%> </td>-->
+  				<input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>">
   				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
   				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
   				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>
@@ -811,7 +826,8 @@
   			if gce_nom= "Finalizada" then
 			%>
 			<tr class="success" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
-  				<td><%=gce_nom%><input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>"> </td>
+  				<!--<td><%=gce_nom%> </td>-->
+  				<input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>">
   				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
   				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
   				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>

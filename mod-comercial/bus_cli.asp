@@ -6,37 +6,13 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <link href="link.css" rel="stylesheet" type="txt/css">
+        <script type="text/javascript" src="js/funciones.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gesti&oacuten Comercia - Inicio</title>
 	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>  
 	
 	<script type="text/javascript">
-		function mostrar(sel){
-			if (sel.value=="dni/cif"){
-				document.getElementById('txt_dnicif').style.display = 'block';
-			}else{
-				document.getElementById('txt_dnicif').style.display = 'none';
-			}
-			if (sel.value=="nombre"){
-				document.getElementById('txt_nombre').style.display = 'block';
-			}else{
-				document.getElementById('txt_nombre').style.display = 'none';
-			}
-			if (sel.value=="domicilio"){
-				document.getElementById('txt_domicilio').style.display = 'block';
-			}else{
-				document.getElementById('txt_domicilio').style.display = 'none';
-			}
-			if (sel.value=="localidad"){
-				document.getElementById('txt_localidad').style.display = 'block';
-			}else{
-				document.getElementById('txt_localidad').style.display = 'none';
-			}
-		}
-
-		function abrir_cli(){
-			document.form_listar.submit();
-		}
+		
 
 
 	</script>
@@ -55,7 +31,7 @@
 		<label for="filtro">Filtro</label>
 		<select class="form-control" id="cbb_filtro" onchange="mostrar(this);">
  				<option value="0" >Seleccione un filtro para la busqueda</option>
- 				<option value="dni/cif" >DNI/CIF</option>
+ 				<option value="dni/cif" >N. I. F. / C. I. F.</option>
  	 			<option value="nombre" selected>Nombre</option>
  				<option value="domicilio">Domicilio</option>
  				<option value="localidad">Localidad</option>
@@ -63,7 +39,7 @@
 	</div>
 	<div class="form-group"></div>
 		<div class="form-group col-lg-2" style="display: none;" id="txt_dnicif">
-			<input type="text" class="form-control" placeholder="DNI CIF" id="dnicif" name="bus_dnicif" maxlength="9">
+			<input type="text" class="form-control" placeholder="N. I. F. / C. I. F." id="bus_dnicif" name="bus_dnicif" maxlength="9" onblur="comprobarNifCif(document.getElementById('bus_dnicif').value)">
 		</div>
 		<div class="form-group col-lg-4" id="txt_nombre">
 			<input type="text" class="form-control" placeholder="Nombre"  id="nombre" name="bus_nombre" maxlength="50">

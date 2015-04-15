@@ -36,7 +36,7 @@
 				</li>
 				<li> <a href="gest_comercial.asp">Gesti&oacuten Comercial</a></li>
 				<li> <a href="gest_visitas.asp">Gesti&oacuten Visitas</a></li>
-				<li><a href="Default.asp">Salir</a></li>
+				<li><a href="salir.asp">Salir</a></li>
 				
 			</ul>
 		</div>

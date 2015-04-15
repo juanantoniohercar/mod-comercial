@@ -30,14 +30,14 @@
   </div>
 </div>
 <% 
-  Dim cto_id,cto_cli,cto_nom,cto_tlf,cto_mail
-  cto_id = request.form("idcontacto")
-  cto_cli = request.form("idcontacto_cli")
-  cto_nom = request.form("nombcto")
-  cto_tlf = request.form("telcto")
-  cto_mail = request.form("mailcto")
+  Dim add_cto_id,add_cto_cli,add_cto_nom,add_cto_tlf,add_cto_mail
+  add_cto_id = request.form("idcontacto")
+  add_cto_cli = request.form("idcontacto_cli")
+  add_cto_nom = request.form("nombcto")
+  add_cto_tlf = request.form("telcto")
+  add_cto_mail = request.form("mailcto")
   
-  call add_cto(cto_id,cto_cli,cto_nom,cto_tlf,cto_mail)
+  call add_cto(add_cto_id,add_cto_cli,add_cto_nom,add_cto_tlf,add_cto_mail)
 %>
 
 

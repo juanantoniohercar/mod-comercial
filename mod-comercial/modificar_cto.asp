@@ -30,13 +30,13 @@
   </div>
 </div>
 <% 
-  Dim cto_id,cto_nom,cto_tlf,cto_mail
-  cto_id = request.form("idcontacto")
-  cto_nom = request.form("nombrecto")
-  cto_tlf = request.form("tlf_cto")
-  cto_mail = request.form("email_cto")
+  Dim mod_cto_id,mod_cto_nom,mod_cto_tlf,mod_cto_mail
+  mod_cto_id = request.form("idcontacto")
+  mod_cto_nom = request.form("nombrecto")
+  mod_cto_tlf = request.form("tlf_cto")
+  mod_cto_mail = request.form("email_cto")
   
-  call modificar_cto(cto_id,cto_nom,cto_tlf,cto_mail)
+  call modificar_cto(mod_cto_id,mod_cto_nom,mod_cto_tlf,mod_cto_mail)
 %>
 
 

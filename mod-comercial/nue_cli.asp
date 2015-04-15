@@ -5,6 +5,9 @@
         <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
+        <script type="text/javascript" src="js/funciones.js"></script>
+        <script type="text/javascript">
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
@@ -24,8 +27,8 @@
 		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=generar_cod("CLI","cli_id")%>" readonly>
 	</div> 
 	<div class="form-group col-lg-2">
-		<label for="cif">C. I. F.</label>
-		<input type="text" class="form-control" id="cif" placeholder="C. I. F." maxlength="9" name="cif" value='<%=request.querystring("cif")%>' required>
+		<label for="cif">N. I. F. / C. I. F.</label>
+		<input type="text" class="form-control" id="cif" placeholder="N. I. F. / C. I. F." maxlength="9" name="cif" onblur="comprobarNifCif(document.getElementById('cif').value)" value='<%=request.querystring("cif")%>' required>
 	</div> 
 	<div class="form-group col-lg-5">
 		<label for="nombre">Nombre</label>
@@ -38,7 +41,7 @@
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="prov" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value + '&nombre_cto=' + form_nuevo_cli.nombre_cto.value + '&tlf_cto=' + form_nuevo_cli.tlf_cto.value + '&email_cto=' + form_nuevo_cli.email_cto.value">
+		<select class="form-control" id="prov" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value + '&nombre_cto=' + form_nuevo_cli.nombre_cto0.value + '&tlf_cto=' + form_nuevo_cli.tlf_cto0.value + '&email_cto=' + form_nuevo_cli.email_cto0.value">
   			<option value=0>Seleccione una provincia</option>
   			<%
 	  			SQL_prov="select * from PROV order by prov_nom asc"
@@ -70,7 +73,7 @@
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select class="form-control" id="pob" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value + '&nombre_cto=' + form_nuevo_cli.nombre_cto.value + '&tlf_cto=' + form_nuevo_cli.tlf_cto.value + '&email_cto=' + form_nuevo_cli.email_cto.value">
+		<select class="form-control" id="pob" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value + '&nombre_cto=' + form_nuevo_cli.nombre_cto0.value + '&tlf_cto=' + form_nuevo_cli.tlf_cto0.value + '&email_cto=' + form_nuevo_cli.email_cto0.value">
 			<option >Seleccione una poblaci&oacuten</option>
 			<% 
 				if request.querystring("provincia") <> "" then
@@ -131,26 +134,39 @@
  	<div class="form-group col-lg-12"><br>
  		<h3>Contacto</h3>
 		<hr class="" color="DFDCDC">
-		<button type="button" class="btn btn-success btn-xs" onclick="">
+		<button type="button" class="btn btn-success btn-xs" onclick="crear_inputs()">
     		<span class="glyphicon glyphicon-plus-sign"></span>
 		</button>
+		<button type="button" class="btn btn-danger btn-xs" onclick="remover_inputs()">
+    		<span class="glyphicon glyphicon-minus-sign"></span>
+		</button>
 	</div>
-	<div class="form-group col-lg-5">
-		<input type="hidden" value="<%=generar_cod("CLI_CTO","cto_id")%>" name="id_cto">
+	<div class="form-group col-lg-5" id="nomcto">
+		<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cto_id")%>">
 		<label for="nombre_cto">Nombre</label>
-		<input type="text" class="form-control" id="nombre_cto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombre_cto" value='<%=request.querystring("nombre_cto")%>'>
+		<input type="text" class="form-control" id="nombre_cto0" placeholder="NOMBRE Y APELLIDOS" maxlength="45" name="nombre_cto0" value='<%=request.querystring("nombre_cto")%>'>
 	</div>
-	<div class="form-group col-lg-3">
+	
+	<div class="form-group col-lg-3" id="telcto">
 		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=request.querystring("tlf_cto")%>'>
+ 		<input type="tel" class="form-control" id="telefono_cto0" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto0" value='<%=request.querystring("tlf_cto")%>'>
 	</div>
-	<div class="form-group col-lg-4">
+	
+	<div class="form-group col-lg-4" id="emailcto">
 		<label for="email_cto">E-mail</label>
-		<input type="email" class="form-control" id="email_cto" placeholder="email@ejemplo.com" name="email_cto" value='<%=request.querystring("email_cto")%>'>
+		<input type="email" class="form-control" id="email_cto0" placeholder="email@ejemplo.com" name="email_cto0" value='<%=request.querystring("email_cto")%>'>
 	</div>
-	<div class="form-group col-lg-2">
+	<div class="form-group col-lg-5" id="div_nomcto"></div>
+	<div class="form-group col-lg-3" id="div_telcto"></div>
+	<div class="form-group col-lg-4" id="div_emailcto"></div>
+	
+	<div class="form-group col-lg-2"  id="div_submit">
 		<input type="submit" name="crear_cliente" value="Crear" class="btn btn-primary btn-lg">
 	</div>
+	<input type="hidden" name="contador" id="contador" >
+	<script type="text/javascript">
+	var cod = document.getElementById('id_cto0').value;
+	document.getElementById('contador').value = cont;</script>
 </form>
 </div>
 </body>
