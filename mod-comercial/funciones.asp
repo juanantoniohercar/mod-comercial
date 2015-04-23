@@ -1007,7 +1007,7 @@
 				cto_nom = RS_cli_cto_vi("cc_nom")
 				cto_id = RS_cli_cto_vi("cc_id")
 				p = request.querystring("cto_nom")
-				response.write p
+				
 				
 				if cto_nom_vi <> cto_nom then
 					if p = cto_nom then
@@ -1086,7 +1086,7 @@
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
 			SQL_update_visita="update GES_COM set gc_hora='"&gc_hora&"', gc_fec='"&gc_fec&"', gc_est="&gc_est&", gc_emp="&gc_emp&", gc_pre="&gc_pre&", gc_cli="&gc_cli&", gc_cli_cto="&gc_cli_cto&", gc_des='"&gc_des&"' where gc_id="&gc_id
-			response.write SQL_update_visita
+			
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
 			Conexion.Execute(SQL_update_visita)
