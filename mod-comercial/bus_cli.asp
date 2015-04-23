@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-        <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <link href="link.css" rel="stylesheet" type="txt/css">
         <script type="text/javascript" src="js/funciones.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Gesti&oacuten Comercia - Inicio</title>
+	<title>Gesti&oacuten Comercia - Buscar Cliente</title>
 	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>  
 	
 	<script type="text/javascript">
@@ -18,9 +17,11 @@
 	</script>
 </head>
 <body onload=document.getElementById("form_busqueda_cli").reset();>
+	<% pag=2 %>
 	<!--#include file="menu.asp"-->
 	<!--#include file="busqueda_cli.asp"-->
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
+
 
 
 <div class="container">
@@ -59,7 +60,7 @@
 	<div class="form-group col-lg-12"><br>
  		<h3>Datos cliente</h3>
 		<hr class="" color="DFDCDC">
-		<button type="button" class="btn btn-success" onclick="window.location.href='bus_cli.asp'">Limpiar Tabla</button>
+		<button type="button" class="btn btn-success" onclick="window.location.href='bus_cli.asp'">Limpiar listado</button>
 	</div>
 	<%busqueda()%>
 </div>

@@ -41,20 +41,6 @@ if dnicif <> "" then
 
 	'Función para crear trbala de busqueda'
 	creartabla_bus(RS_buscli)
-else
-%>
-	
-	<table border=3 class="table table-striped">
-		<thead>
- 			<tr>
- 				<th>Nombre</th>
- 				<th>Telefono</th>
- 				<th>Domicilio</th>
- 				<th>OPCIONES</th>
- 			</tr>
- 		</thead>
- 		</table>
-<%
 end if
 end function
 %>

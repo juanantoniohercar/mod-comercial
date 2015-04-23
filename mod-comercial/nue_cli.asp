@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-        <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <script type="text/javascript" src="js/funciones.js"></script>
         <script type="text/javascript">
         </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Gesti&oacuten Comercia - Inicio</title>
+	<title>Gesti&oacuten Comercia - Nuevo Cliente</title>
 </head>
 <body>
+	<% pag=1 %>
 	<!--#include file="menu.asp"-->
 	<!--#include file="funciones.asp"-->
 	<% autorizar session("autorizacion") %>
 <div class="container">
 	<h3>Nuevo Cliente</h3>
 	<hr color="DFDCDC">
+	
 <form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
 
 	
@@ -141,25 +142,26 @@
     		<span class="glyphicon glyphicon-minus-sign"></span>
 		</button>
 	</div>
-	<div class="form-group col-lg-5" id="nomcto">
-		<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cto_id")%>">
+	<div class="form-group col-lg-5" id="div_nomcto">
+		<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cc_id")%>">
 		<label for="nombre_cto">Nombre</label>
 		<input type="text" class="form-control" id="nombre_cto0" placeholder="NOMBRE Y APELLIDOS" maxlength="45" name="nombre_cto0" value='<%=request.querystring("nombre_cto")%>'>
 	</div>
 	
-	<div class="form-group col-lg-3" id="telcto">
+	<div class="form-group col-lg-3" id="div_telcto">
 		<label for="telefono_cto">Tel&eacutefono</label>
  		<input type="tel" class="form-control" id="telefono_cto0" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto0" value='<%=request.querystring("tlf_cto")%>'>
 	</div>
 	
-	<div class="form-group col-lg-4" id="emailcto">
+	<div class="form-group col-lg-4" id="div_emailcto">
 		<label for="email_cto">E-mail</label>
 		<input type="email" class="form-control" id="email_cto0" placeholder="email@ejemplo.com" name="email_cto0" value='<%=request.querystring("email_cto")%>'>
 	</div>
-	<div class="form-group col-lg-5" id="div_nomcto"></div>
-	<div class="form-group col-lg-3" id="div_telcto"></div>
-	<div class="form-group col-lg-4" id="div_emailcto"></div>
-	
+	<div class="form-group">
+		<div class="form-group col-lg-5" id="nomcto"></div>
+		<div class="form-group col-lg-3" id="telcto"></div>
+		<div class="form-group col-lg-4" id="emailcto"></div>
+	</div>
 	<div class="form-group col-lg-2"  id="div_submit">
 		<input type="submit" name="crear_cliente" value="Crear" class="btn btn-primary btn-lg">
 	</div>

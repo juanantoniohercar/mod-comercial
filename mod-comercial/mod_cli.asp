@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-		<title>Gesti&oacuten Comercia - Login</title>
 		<link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
 		<link href="css/login.css" rel="stylesheet" type="txt/css">
  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
  		<script type="text/javascript" src="js/funciones.js"></script>
  		<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
-	<title>Gesti&oacuten Comercia - Inicio</title>
+	<title>Gesti&oacuten Comercia - Modificar Cliente</title>
 	
 	
 </head>
 <body >
+	<% pag=3 %>
 	<!--#include file="menu.asp"-->
 	<!--#include file="funciones.asp"-->
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
@@ -21,6 +21,7 @@
 		id_prov=request.querystring("provincia")
 		 call datos_cli_cto(id_cli, "CLI")
 		idprov = CStr(idprov)
+		
 	%>
 <div class="container">
 	<h3>Cliente a modificar</h3>
@@ -202,7 +203,7 @@
 <form action="add_cto.asp" method="POST" name="form_add_cto" class="form-horizontal" >
 	<div class="form-group col-lg-5">
 		<label for="nombre_cto">Nombre</label>
-		<input type="hidden" name="idcontacto" value="<%=generar_cod("CLI_CTO","cto_id")%>">
+		<input type="hidden" name="idcontacto" value="<%=generar_cod("CLI_CTO","cc_id")%>">
 		<input type="hidden" name="idcontacto_cli" value="<%=id_cli%>">
 	<input type="text" class="form-control" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombcto" required>
 	</div>

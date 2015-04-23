@@ -1,8 +1,12 @@
 <!--#include file="connectionbd.asp"-->
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-	<link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
-	<link href="css/tableresponsive.css" rel="stylesheet" type="txt/css">
+	<meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
+	<link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
+    <link href="css/login.css" rel="stylesheet" type="txt/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 	<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
 	<link href="link.css" rel="stylesheet" type="txt/css">
 	<script type="text/javascript">
@@ -69,13 +73,14 @@
        		session("autorizacion")=1
        		response.redirect("inicio.asp")
        		response.end
+       		 
        		else
        			'si no coincide los datos o no existen error'
        			session("autorizacion")=-1
        			alert_formularios "USUARIO O CONTRASEÑA NO VÁLIDOS","warning"
 
        		end if
-      	objRS.MoveNext 
+      	objRS.MoveNext
    		wend
 
    		set objRS = nothing 
@@ -115,7 +120,7 @@
 	
 	end function
 
-	'funcion para insertar cliente en la base de datos
+	
 	'funcion para insertar cliente en la base de datos
 	function insertar_cliente(id_cli,cli_cif,cli_nom,cli_prov,cli_pob,cli_dir,cli_tlf)
 
@@ -124,7 +129,7 @@
 		if id_cli = "" or cli_cif = "" or cli_nom = "" or cli_prov = "" or cli_pob = "" or cli_dir = "" or cli_tlf = "" then
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
-			ins_cli = "insert into CLI values ("&id_cli&",'"&cli_cif&"','"&cli_nom&"',"&cli_prov&","&cli_pob&",'"&cli_dir&"','"&cli_tlf&"')"
+			ins_cli = "insert into CLI (cli_id, cli_cif, cli_nom, cli_prov, cli_pob, cli_dir, cli_tlf) values ("&id_cli&",'"&cli_cif&"','"&cli_nom&"',"&cli_prov&","&cli_pob&",'"&cli_dir&"','"&cli_tlf&"')"
 			
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
@@ -144,7 +149,7 @@
 		dim ins_cto
 		
 			
-			ins_cto = "insert into CLI_CTO values ("&id_cto&","&id_cli&",'"&nom_cto&"','"&tlf_cto&"','"&correo_cto&"')"
+			ins_cto = "insert into CLI_CTO (cc_id, cc_cli, cc_nom, cc_tlf, cc_mail) values ("&id_cto&","&id_cli&",'"&nom_cto&"','"&tlf_cto&"','"&correo_cto&"')"
 			
 				if nom_cto = "" and tlf_cto = "" and correo_cto = ""  then
 					'alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
@@ -168,13 +173,13 @@
 	function creartabla_bus(rs)
 	%>
 	
-		<table border=3 class="table table-striped">
+		<table border=0 class="table ">
 		<thead>
 			<tr>
-				<th>Nombre</th>
+				<!--<th>Nombre</th>
 				<th>Telefono</th>
 				<th>Domicilio</th>
-				<th>OPCIONES</th>
+				<th>OPCIONES</th>-->
 			</tr>
 		</thead>
  	
@@ -194,16 +199,59 @@
 
 			<tr>
 
-				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value">
+				<td width=100% onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id<%=cli_id%>').value + '&provincia=' + document.getElementById('provincia<%=cli_id%>').value + '&poblacion=' + document.getElementById('poblacion<%=cli_id%>').value + '&mostrar=' + document.getElementById('mostrar<%=cli_id%>').value">
 					<form name="form_list" action="abrir_cli.asp" method="get">
-						<input type="hidden" name="id" id="id" value="<%=cli_id%>">
-						<input type="hidden" name="provincia" id="provincia" value="<%=cli_prov%>">
-						<input type="hidden" name="poblacion" id="poblacion" value="<%=cli_pob%>">
-	 					<input type="hidden" name="mostrar" id="mostrar" value="0">
+						<input type="hidden" name="id" id="id<%=cli_id%>" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" id="provincia<%=cli_id%>" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" id="poblacion<%=cli_id%>" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" id="mostrar<%=cli_id%>" value="0">
 					</form>
-					<%=cli_nombre%>
+
+					<div class="col-xs-6 col-sm-6 col-md-6 ">
+			
+						<p class="pull-left"><%=cli_nombre%></p>
+
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						
+						<p class="pull-left"><%=cli_tlf%></p>
+
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3">
+						
+						<div class="pull-right">
+					<form name="form_modificar" action="mod_cli.asp" method="get">
+						<input type="hidden" name="id" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" value="0">
+						<button type="submit" class="btn btn-primary btn-xs">
+	 						<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					</form>
+					</div>
+					
+					<div class="pull-right">
+					<form name="form_listar" class="form-horizontal" action ="abrir_cli.asp" method="get">
+						<input type="hidden" name="id" value="<%=cli_id%>">
+						<input type="hidden" name="provincia" value="<%=cli_prov%>">
+						<input type="hidden" name="poblacion" value="<%=cli_pob%>">
+	 					<input type="hidden" name="mostrar" value="0">
+						<button type="submit" class="btn btn-success btn-xs">
+							<span class="glyphicon glyphicon-open"></span>
+						</button>
+					</form>
+					</div>
+					
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4">
+						<p class=""><%=cli_dir%></p>
+					</div>
 				</td>
-				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value"><%=cli_tlf%></td>
+				<!--<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value"><%=cli_tlf%></td>
 				<td onclick="window.location.href='abrir_cli.asp?id=' + document.getElementById('id').value + '&provincia=' + document.getElementById('provincia').value + '&poblacion=' + document.getElementById('poblacion').value + '&mostrar=' + document.getElementById('mostrar').value"><%=cli_dir%></td>
 				<td>
 					<div class="pull-left">
@@ -227,13 +275,13 @@
 							<span class="glyphicon glyphicon-open"></span>
 						</button>
 					</form>
-					</div>
-					<form name="form_borrar" class="form-horizontal" action ="borrar_cli.asp" method="post" onsubmit="return comprobarbtn();">
+					</div>-->
+					<!--<form name="form_borrar" class="form-horizontal" action ="borrar_cli.asp" method="post" onsubmit="return comprobarbtn();">
 					<input type="hidden" name="id" value="<%=cli_id%>">
 					<button type="submit" class="btn btn-danger btn-xs">
  					<span class="glyphicon glyphicon-remove-circle"></span>
 					</button>
-					</form>
+					</form>-->
 				</td>
 			</tr>
 
@@ -255,7 +303,7 @@
 	function datos_cli_cto(id, tabla)
 	
 	SQL_cli="select * from "&tabla&" where cli_id='"&id&"'"
-	SQL_cto="select CLI_CTO.cto_id, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail from CLI, CLI_CTO where CLI.cli_id=CLI_CTO.cto_cli and CLI.cli_id='"&id&"'"
+	SQL_cto="select CLI_CTO.cc_id, CLI_CTO.cc_nom, CLI_CTO.cc_tlf, CLI_CTO.cc_mail from CLI, CLI_CTO where CLI.cli_id=CLI_CTO.cc_cli and CLI.cli_id='"&id&"'"
 	set RS_cli = createobject("ADODB.Recordset")
 	set RS_cto = createobject("ADODB.Recordset")
 	RS_cli.open SQL_cli, Conexion
@@ -334,9 +382,9 @@
 	<%
 	'Recorremos en la base de datos para recuperar los datos de los contactos de ese cliente'
 	do while not RS_cto.eof
-		nombre_cto=RS_cto("cto_nom")
-		tlf_cto=RS_cto("cto_tlf")
-		email_cto=RS_cto("cto_mail")
+		nombre_cto=RS_cto("cc_nom")
+		tlf_cto=RS_cto("cc_tlf")
+		email_cto=RS_cto("cc_mail")
 
 		RS_cto.movenext
 	%>
@@ -369,8 +417,8 @@
 	RS_cto.open SQL_cto, Conexion
 
 	do while not RS_cto.eof
-		id_contacto= RS_cto("cto_id")
-		nombre_cto=RS_cto("cto_nom")
+		id_contacto= RS_cto("cc_id")
+		nombre_cto=RS_cto("cc_nom")
 		nombre_cto_esp=Server.URLEncode(nombre_cto)
 		ppp = request.querystring("nombre_cto")
 
@@ -394,15 +442,15 @@
 	function datos_cto()
 	if request.querystring("contacto") <> "" then
 
-				SQL_datos_cto= "select cto_id, cto_nom, cto_tlf, cto_mail from CLI_CTO where cto_id="&request.querystring("contacto")
+				SQL_datos_cto= "select cc_id, cc_nom, cc_tlf, cc_mail from CLI_CTO where cc_id="&request.querystring("contacto")
 				set RS_datos_cto=createobject("ADODB.Recordset")
 				RS_datos_cto.open SQL_datos_cto,Conexion
 
 				do while not RS_datos_cto.eof
-				id_cont=RS_datos_cto("cto_id")
-				nombrecto=RS_datos_cto("cto_nom")
-				tlf_cto=RS_datos_cto("cto_tlf")
-				email_cto=RS_datos_cto("cto_mail")
+				id_cont=RS_datos_cto("cc_id")
+				nombrecto=RS_datos_cto("cc_nom")
+				tlf_cto=RS_datos_cto("cc_tlf")
+				email_cto=RS_datos_cto("cc_mail")
 				RS_datos_cto.movenext
 				loop
  				RS_datos_cto.close				
@@ -457,7 +505,7 @@
 	if mod_cto_nom = "" or mod_cto_tlf = "" or mod_cto_mail = "" then
 			alert_formularios "FALTAN DATOS POR INTRODUCIR","warning"
 		else
-			SQL_update_cto="update CLI_CTO set cto_nom='"&mod_cto_nom&"', cto_tlf='"&mod_cto_tlf&"', cto_mail='"&mod_cto_mail&"' where cto_id='"&mod_cto_id&"'"
+			SQL_update_cto="update CLI_CTO set cc_nom='"&mod_cto_nom&"', cc_tlf='"&mod_cto_tlf&"', cc_mail='"&mod_cto_mail&"' where cc_id='"&mod_cto_id&"'"
 			'Si hay un error en la base de datos permite continuar con la ejecucion del script
 			on error resume next
 			Conexion.Execute(SQL_update_cto)
@@ -492,7 +540,7 @@
 	'funcion que añade un contacto a un cliente ya creado'
 	function add_cto(add_cto_id,add_cto_cli,add_cto_nom,add_cto_tlf,add_cto_mail)
 
-		SQL_insert_cto="insert into CLI_CTO values ("&add_cto_id&","&add_cto_cli&",'"&add_cto_nom&"','"&add_cto_tlf&"','"&add_cto_mail&"')"
+		SQL_insert_cto="insert into CLI_CTO (cc_id, cc_cli, cc_nom, cc_tlf, cc_mail) values ("&add_cto_id&","&add_cto_cli&",'"&add_cto_nom&"','"&add_cto_tlf&"','"&add_cto_mail&"')"
 		
 		if add_cto_nom = "" and add_cto_tlf = "" and add_cto_mail = ""  then
 			
@@ -526,7 +574,7 @@
 	'funcion eliminar clientes'
 	function eliminar_cli(id)
 
-	SQL_delete_cto_cli="delete from CLI_CTO where cto_cli='"&id&"'" 
+	SQL_delete_cto_cli="delete from CLI_CTO where cc_cli='"&id&"'" 
 	SQL_delete_cli="delete from CLI where cli_id='"&id&"'" 
 	
 	on error resume next 
@@ -585,33 +633,52 @@
 	end function
 
 	'funcions busqueda clientes para gestion comercial'
-	public cli_id, cli_nom, cli_tlf, cto_id, cto_cli, cto_nom, cto_tlf, cto_mail, nombre_cliente
+	public cli_id, cli_nom, cli_tlf, cto_id, cto_cli, cto_nom, cto_tlf, cto_mail, nombre_cliente, visible
 	function bus_cliente()
 		nombre_cliente=request.querystring("bus_nomcli")
-		SQL_bus_cli="select * from CLI where cli_nom='"&nombre_cliente&"'"
+		visible="hide"
+		if nombre_cliente <> "" then
+		visible="show"
+		response.write visible
+		SQL_bus_cli="select * from CLI where cli_nom like '%"&nombre_cliente&"%'"
 		set RS_bus_cli=createobject("ADODB.Recordset")
 		RS_bus_cli.open SQL_bus_cli,Conexion
-		
 		do while not RS_bus_cli.eof
 			cli_id=RS_bus_cli("cli_id")
 			cli_nom=RS_bus_cli("cli_nom")
 			cli_tlf=RS_bus_cli("cli_tlf")
 
+			cli_nom_esp=Server.URLEncode(cli_nom)
+			cadena = request.querystring("cliente")
+
+			if cli_id <> "" then
+						if cadena = cli_nom then
+							response.write "<option value="&cli_id&"&cliente="&cli_nom_esp&"&tlf="&cli_tlf&" selected>"&cli_nom&"</option>"
+				   			elseif cadena <> cli_nom then
+				        		response.write "<option value="&cli_id&"&cliente="&cli_nom_esp&"&tlf="&cli_tlf&" >"&cli_nom&"</option>"
+				   		 	end if
+						else
+							response.write "<option value="&cli_id&"&cliente="&cli_nom_esp&"&tlf="&cli_tlf&">"&cli_nom&"</option>"
+						end if
+
+
 		RS_bus_cli.movenext
 		loop
 		RS_bus_cli.close
+		end if
 	end function
 
 	'funcion para la busqueda del contacto para el cliente que vamos a realizar la visita'
 	function bus_cli_cto()
-				SQL_bus_cli_cto="select * from CLI_CTO where cto_cli='"&cli_id&"'"
+				cliente_id=request.querystring("id")
+				SQL_bus_cli_cto="select * from CLI_CTO where cc_cli='"&cliente_id&"'"
 				set RS_bus_cli_cto= createobject("ADODB.Recordset")
 				RS_bus_cli_cto.open SQL_bus_cli_cto,Conexion
 				
 				do while not RS_bus_cli_cto.eof
-					cto_id=RS_bus_cli_cto("cto_id")
-					cto_cli=RS_bus_cli_cto("cto_cli")
-					cto_nom=RS_bus_cli_cto("cto_nom")
+					cto_id=RS_bus_cli_cto("cc_id")
+					cto_cli=RS_bus_cli_cto("cc_cli")
+					cto_nom=RS_bus_cli_cto("cc_nom")
 					cto_nom_esp=Server.URLEncode(cto_nom)
 					cadena = request.querystring("cto_nom")
 
@@ -636,13 +703,13 @@
 	function datos_cto_cli()
 				if request.querystring("contacto") <> "" then
 
-				SQL_datos_cli_cto= "select cto_tlf, cto_mail from CLI_CTO where cto_id="&request.querystring("contacto")
+				SQL_datos_cli_cto= "select cc_tlf, cc_mail from CLI_CTO where cc_id="&request.querystring("contacto")
 				set RS_datos_cli_cto=createobject("ADODB.Recordset")
 				RS_datos_cli_cto.open SQL_datos_cli_cto,Conexion
 
 				do while not RS_datos_cli_cto.eof
-				cto_tlf=RS_datos_cli_cto("cto_tlf")
-				cto_mail=RS_datos_cli_cto("cto_mail")
+				cto_tlf=RS_datos_cli_cto("cc_tlf")
+				cto_mail=RS_datos_cli_cto("cc_mail")
 				RS_datos_cli_cto.movenext
 				loop
  				RS_datos_cli_cto.close				
@@ -682,8 +749,8 @@
 
 	'funcion para buscar los presupuestos
 	function select_pre()
-
-		SQL_pre="select * from PRE where pre_cli='"&cli_id&"'"
+		cliente_id=request.querystring("id")
+		SQL_pre="select * from PRE where pre_cli='"&cliente_id&"'"
 				set RS_pre= createobject("ADODB.Recordset")
 				RS_pre.open SQL_pre,Conexion
 				
@@ -715,8 +782,7 @@
 	function insert_gescom(gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des)
 
 
-		SQL_insert_gescom="insert into GES_COM values ("&gc_id&",'"&gc_hora&"','"&gc_fec&"',"&gc_est&","&gc_emp&","&gc_pre&","&gc_cli&","&gc_cli_cto&",'"&gc_des&"')"
-	
+		SQL_insert_gescom="insert into GES_COM (gc_id, gc_hora, gc_fec, gc_est, gc_emp, gc_pre, gc_cli, gc_cli_cto, gc_des) values ("&gc_id&",'"&gc_hora&"','"&gc_fec&"',"&gc_est&","&gc_emp&","&gc_pre&","&gc_cli&","&gc_cli_cto&",'"&gc_des&"')"
 		on error resume next
 		Conexion.Execute(SQL_insert_gescom)
 			'Si error es nivel distinto de cero nos mostrara mensaje de error, sino no mostrara mensaje de que se ha introducido correctamente el los datos en la base de datos
@@ -740,22 +806,29 @@
 		visita_estado=cad_estado(0)
 		visita_estado=cstr(visita_estado)
 		comercial=session("emp_id")
-
-
-		if visita_estado = 3 then
-			SQL_visitas="select CLI.cli_id, CLI_CTO.cto_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"'"
+		if visita_estado = "" AND visita_fecha1 = "" AND visita_fecha2 = "" then
+			SQL_visitas="select CLI.cli_id, CLI_CTO.cc_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cc_nom, CLI_CTO.cc_tlf, CLI_CTO.cc_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM_EST.gce_id=2 and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cc_id ORDER BY GES_COM.gc_fec ASC"
 				set RS_visitas=createobject("ADODB.Recordset")
 				RS_visitas.open SQL_visitas,Conexion
+				
+			tabla_visitas(RS_visitas)
 
+		end if
+
+		if visita_estado = 3 then
+			SQL_visitas="select CLI.cli_id, CLI_CTO.cc_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cc_nom, CLI_CTO.cc_tlf, CLI_CTO.cc_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cc_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"' ORDER BY GES_COM.gc_fec ASC"
+				set RS_visitas=createobject("ADODB.Recordset")
+				RS_visitas.open SQL_visitas,Conexion
+				
 			tabla_visitas(RS_visitas)
 
 			
 		else
 
-			SQL_visitas="select CLI.cli_id, CLI_CTO.cto_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM_EST.gce_id="&visita_estado&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"'"
+			SQL_visitas="select CLI.cli_id, CLI_CTO.cc_id, GES_COM.gc_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cc_nom, CLI_CTO.cc_tlf, CLI_CTO.cc_mail, GES_COM.gc_des from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id="&comercial&" and GES_COM_EST.gce_id="&visita_estado&" and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cc_id and GES_COM.gc_fec between '"&visita_fecha1&"' and '"&visita_fecha2&"' ORDER BY GES_COM.gc_fec ASC"
 				set RS_visitas=createobject("ADODB.Recordset")
 				RS_visitas.open SQL_visitas,Conexion
-
+				
 			tabla_visitas(RS_visitas)
 			
 		end if
@@ -768,18 +841,10 @@
 	%>
 	
 	
-		<table border=3 class="table table-striped">
+		<table border=0 class="table">
 			<thead>
   				<tr>
-          			<!--<th>Estado</th>-->
-          			<th>Fecha Visita</th>
-          			<th>Hora Visita</th>
-  					<th>Cliente</th>
-          			<th>Dirección</th>
-  					<th>Nombre contacto</th>
-  					<th>Telefono</th>
-  					<th>E-mail</th>
-  					<th>Descripci&oacuten</th>
+          			
   				</tr>
   			</thead>
   	<%
@@ -787,16 +852,16 @@
 
   		do while not rs.eof
   			cli_id=rs("cli_id")
-  			cto_id=rs("cto_id")
+  			cto_id=rs("cc_id")
   			gc_id=rs("gc_id")
   			gce_nom=rs("gce_nom")
   			gc_fec=rs("gc_fec")
   			gc_hora=rs("gc_hora")
   			cli_nom=rs("cli_nom")
   			cli_dir=rs("cli_dir")
-  			cto_nom=rs("cto_nom")
-  			cto_tlf=rs("cto_tlf")
-  			cto_mail=rs("cto_mail")
+  			cto_nom=rs("cc_nom")
+  			cto_tlf=rs("cc_tlf")
+  			cto_mail=rs("cc_mail")
   			gc_des=rs("gc_des")
 
   			rs.movenext
@@ -811,31 +876,78 @@
   			<tr class="danger" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
   				<!--<td><%=gce_nom%> </td>-->
   				<input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>">
-  				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
-  				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
-  				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>
-  				<td><%=cli_dir%></td>
-  				<td><%=cto_nom%><input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>"></td>
-  				<td><%=cto_tlf%></td>
-  				<td><%=cto_mail%></td>
-  				<td><%=gc_des%><textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea></td>
+  				<input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>">
+  				<input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>">
+  				<input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>">
+  				<input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>">
+  				<textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea>
+  				<td width=100%> 
+  					<div class="col-xs-6 col-sm-6 col-md-6 ">
+			
+						<p class="pull-left"><%=cli_nom%> (<%=cli_dir%>)</p>
 
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						
+						<p class="pull-right"><%=cdate(gc_fec)%>-<%=gc_hora%></p>
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4">
+						<p class=""><%=cto_nom%></p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<p class=""><%=cto_tlf%></p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<p class=""><%=cto_mail%></p>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						
+						<p><%=gc_des%></p>
+					</div>
+				</td>
   			</tr>
   			<%
   			end if
   			if gce_nom= "Finalizada" then
 			%>
-			<tr class="success" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
+			<tr class="" onclick="window.location.href='mod_visita.asp?id=' + document.getElementById('<%=gc_id%>').value + '&contacto=' + document.getElementById('<%=cto_id%>').value + '&cliente=' + document.getElementById('<%=cli_id%>').value + '&des=' + document.getElementById('modv_desc<%=gc_id%>').value + '&fecha=' + document.getElementById('modv_fecha<%=gc_fec%>').value + '&hora=' + document.getElementById('modv_hora<%=gc_hora%>').value">
   				<!--<td><%=gce_nom%> </td>-->
   				<input type="hidden" id="<%=gc_id%>" name="<%=gc_id%>" value="<%=gc_id%>">
-  				<td><%=gc_fec%> <input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>"></td>
-  				<td><%=gc_hora%> <input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>"></td>
-  				<td><%=cli_nom%> <input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>"></td>
-  				<td><%=cli_dir%></td>
-  				<td><%=cto_nom%><input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>"></td>
-  				<td><%=cto_tlf%></td>
-  				<td><%=cto_mail%></td>
-  				<td><%=gc_des%><textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea></td>
+  				<input type="hidden" class="form-control" id="modv_fecha<%=gc_fec%>" name="modv_fecha<%=gc_fec%>" value="<%=gc_fec%>">
+  				<input type="hidden" class="form-control" id="modv_hora<%=gc_hora%>" name="modv_hora<%=gc_hora%>" value="<%=gc_hora%>">
+  				<input type="hidden" id="<%=cli_id%>" name="<%=cli_id%>" value="<%=cli_id%>">
+  				<input type="hidden" id="<%=cto_id%>" name="<%=cto_id%>" value="<%=cto_id%>">
+  				<textarea style="display:none;" class="form-control" rows="4" id="modv_desc<%=gc_id%>" name="modv_desc<%=gc_id%>"><%=gc_des%></textarea>
+  				<td width=100%> 
+  					<div class="col-xs-6 col-sm-6 col-md-6 ">
+			
+						<p class="pull-left"><%=cli_nom%> (<%=cli_dir%>)</p>
+
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						
+						<p class="pull-right"><%=cdate(gc_fec)%>-<%=gc_hora%></p>
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4">
+						<p class=""><%=cto_nom%></p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<p class=""><%=cto_tlf%></p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4">
+						<p class=""><%=cto_mail%></p>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						
+						<p><%=gc_des%></p>
+					</div>
+				</td>
   			</tr>
   			<%
   			end if
@@ -858,22 +970,22 @@
 	public cto_id_vi,gce_id_vi, gce_nom_vi, gc_fec_vi, gc_hora_vi, cli_nom_vi, cli_tlf_vi, cto_nom_vi, cto_tlf_vi, cto_mail_vi, gc_des_vi, gc_pre_vi, cli_id_vi
 	function datos_visita(id)
 
-		SQL_datos_visita="select CLI.cli_id, CLI_CTO.cto_id, CLI.cli_tlf, GES_COM.gc_pre, GES_COM.gc_id, GES_COM_EST.gce_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cto_nom, CLI_CTO.cto_tlf, CLI_CTO.cto_mail, GES_COM.gc_des, PRE.pre_id from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP, PRE where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id='"&session("emp_id")&"' and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cto_id and PRE.pre_id=GES_COM.gc_pre and gc_id='"&id&"'"
+		SQL_datos_visita="select CLI.cli_id, CLI_CTO.cc_id, CLI.cli_tlf, GES_COM.gc_pre, GES_COM.gc_id, GES_COM_EST.gce_id, GES_COM_EST.gce_nom, GES_COM.gc_fec,GES_COM.gc_hora, CLI.cli_nom, CLI.cli_dir, CLI_CTO.cc_nom, CLI_CTO.cc_tlf, CLI_CTO.cc_mail, GES_COM.gc_des, PRE.pre_id from GES_COM_EST, GES_COM, CLI, CLI_CTO, EMP, PRE where GES_COM.gc_emp=EMP.emp_id and GES_COM_EST.gce_id=GES_COM.gc_est and EMP.emp_id='"&session("emp_id")&"' and GES_COM.gc_cli=CLI.cli_id and GES_COM.gc_cli_cto=CLI_CTO.cc_id and PRE.pre_id=GES_COM.gc_pre and gc_id='"&id&"'"
 		set RS_datos_visita=createobject("ADODB.Recordset")
 		RS_datos_visita.open SQL_datos_visita,Conexion
 
 		do while not RS_datos_visita.eof
 			cli_id_vi=RS_datos_visita("cli_id")
-			cto_id_vi=RS_datos_visita("cto_id")
+			cto_id_vi=RS_datos_visita("cc_id")
 			gce_id_vi=RS_datos_visita("gce_id")
 			gce_nom_vi=RS_datos_visita("gce_nom")
   			gc_fec_vi=RS_datos_visita("gc_fec")
   			gc_hora_vi=RS_datos_visita("gc_hora")
   			cli_nom_vi=RS_datos_visita("cli_nom")
   			cli_tlf_vi=RS_datos_visita("cli_tlf")
-  			cto_nom_vi=RS_datos_visita("cto_nom")
-  			cto_tlf_vi=RS_datos_visita("cto_tlf")
-  			cto_mail_vi=RS_datos_visita("cto_mail")
+  			cto_nom_vi=RS_datos_visita("cc_nom")
+  			cto_tlf_vi=RS_datos_visita("cc_tlf")
+  			cto_mail_vi=RS_datos_visita("cc_mail")
   			gc_des_vi=RS_datos_visita("gc_des")
   			gc_pre_vi=RS_datos_visita("gc_pre")
 
@@ -887,13 +999,13 @@
 
 	function select_cli_cto_vi()
 				
-				SQL_cli_cto_vi="select * from CLI_CTO where cto_cli="&cli_id_vi
+				SQL_cli_cto_vi="select * from CLI_CTO where cc_cli="&cli_id_vi
 				set RS_cli_cto_vi=createobject("ADODB.Recordset")
 				RS_cli_cto_vi.open SQL_cli_cto_vi,Conexion
 				
 				do while not RS_cli_cto_vi.eof
-				cto_nom = RS_cli_cto_vi("cto_nom")
-				cto_id = RS_cli_cto_vi("cto_id")
+				cto_nom = RS_cli_cto_vi("cc_nom")
+				cto_id = RS_cli_cto_vi("cc_id")
 				p = request.querystring("cto_nom")
 				response.write p
 				
@@ -1008,6 +1120,133 @@
 
 	end function
 
+	'funcion que comprueba si tienes cliente selecciona para el presupuesto sino no te deja entra en la seccion de buscar presupuesto'
+	function validar()
+
+	valor=request.querystring("id")
+	if valor = "0" then
+		%>
+			<script language="JavaScript">
+  				function redireccionar() {
+  					alert ("Debes selecionar un cliente antes de buscar el presupuesto");
+    				setTimeout('history.back()', 0000);
+
+  				}
+  					redireccionar();
+  			</script>
+		<%
+
+	end if
+
+	end function
+
+	'función para buscar el presupuesto'
+	function bus_pre()
+	cliente_id=request.querystring("id")
+	clien_id=request.querystring("bus_pres")
+
+	if clien_id = "" then
+		SQL_pre="select * from PRE where pre_cli='"&cliente_id&"'"
+		set RS_pre= createobject("ADODB.Recordset")
+				RS_pre.open SQL_pre,Conexion
+	%>
+	
+	
+		<table border=0 class="table">
+			<thead>
+  				<tr>
+          			
+  				</tr>
+  			</thead>
+  	<%
+				
+				do while not RS_pre.eof
+					pre_id=RS_pre("pre_id")
+					pre_cli=RS_pre("pre_cli")
+					pre_des=RS_pre("pre_des")
+					cadena = request.querystring("presupuesto")
+					pre_id=cstr(pre_id)
+  				RS_pre.movenext
+  	%>
+  		<tbody>
+  			
+
+  			<tr class="active" onclick="window.location.href='gest_comercial.asp?bus_nomcli=' + form_busq_pre.bus_nomcli1.value + '&id=' + form_busq_pre.id1.value + '&cliente=' + form_busq_pre.cliente1.value + '&tlf=' + form_busq_pre.tlf1.value + '&contacto=' + form_busq_pre.contacto1.value + '&cto_nom=' + form_busq_pre.cto_nom1.value + '&com_asignado=' + form_busq_pre.com_asignado1.value + '&estado=' + form_busq_pre.estado1.value + '&est_nom=' + form_busq_pre.est_nom1.value + '&fecha=' + form_busq_pre.fecha1.value + '&hora=' + form_busq_pre.hora1.value + '&pres=' + document.getElementById('pre<%=pre_id%>').value">
+  				
+  				<input type="hidden" id="pre<%=pre_id%>" name="pre<%=pre_id%>" value="<%=pre_id%>">
+  				<td width=100%> 
+  					<div class="col-xs-6 col-sm-6 col-md-6 ">
+			
+						<p class="pull-left"><%=pre_id%></p>
+
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						
+						<p class="pull-right"><%=pre_cli%></p>
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4">
+						<p class=""><%=pre_des%></p>
+					</div>
+				</td>
+  			</tr>
+  			<%				
+				loop
+				RS_pre.close
+	else
+				SQL_pre="select * from PRE where pre_cli= '"&cliente_id&"' and pre_id like '%"&clien_id&"%'"
+				set RS_pre= createobject("ADODB.Recordset")
+				RS_pre.open SQL_pre,Conexion
+	%>
+	
+	
+		<table border=0 class="table">
+			<thead>
+  				<tr>
+          			
+  				</tr>
+  			</thead>
+  	<%
+				
+				do while not RS_pre.eof
+					pre_id=RS_pre("pre_id")
+					pre_cli=RS_pre("pre_cli")
+					pre_des=RS_pre("pre_des")
+					cadena = request.querystring("presupuesto")
+					pre_id=cstr(pre_id)
+  				RS_pre.movenext
+  	%>
+  		<tbody>
+  			
+
+  			<tr class="active" onclick="window.location.href='gest_comercial.asp?bus_nomcli=' + form_busq_pre.bus_nomcli1.value + '&id=' + form_busq_pre.id1.value + '&cliente=' + form_busq_pre.cliente1.value + '&tlf=' + form_busq_pre.tlf1.value + '&contacto=' + form_busq_pre.contacto1.value + '&cto_nom=' + form_busq_pre.cto_nom1.value + '&com_asignado=' + form_busq_pre.com_asignado1.value + '&estado=' + form_busq_pre.estado1.value + '&est_nom=' + form_busq_pre.est_nom1.value + '&fecha=' + form_busq_pre.fecha1.value + '&hora=' + form_busq_pre.hora1.value + '&pres=' + document.getElementById('pre<%=pre_id%>').value">
+  				
+  				<input type="hidden" id="pre<%=pre_id%>" name="pre<%=pre_id%>" value="<%=pre_id%>">
+  				<td width=100%> 
+  					<div class="col-xs-6 col-sm-6 col-md-6 ">
+			
+						<p class="pull-left"><%=pre_id%></p>
+
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						
+						<p class="pull-right"><%=pre_cli%></p>
+
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4">
+						<p class=""><%=pre_des%></p>
+					</div>
+				</td>
+  			</tr>
+  			<%				
+				loop
+				RS_pre.close
+	end if
+	end function
 
 %>
 </body>

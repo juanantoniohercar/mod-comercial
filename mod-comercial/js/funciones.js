@@ -98,6 +98,21 @@ function comprobarNifCif(abc){
 			var salto_linea3 = document.createElement('br');
 			salto_linea3.setAttribute("id","tercer_salto" + cont);
 
+			//label con el nombre
+			var lbl_nombre = document.createElement('label');
+			lbl_nombre.setAttribute("id", "nombre" + cont);
+  			lbl_nombre.innerHTML = 'Nombre ' + cont;
+
+  			//label con el telefono
+			var lbl_tel = document.createElement('label');
+			lbl_tel.setAttribute("id", "tel" + cont);
+  			lbl_tel.innerHTML = 'Telefono ' + cont;
+  			
+  			//label con el nombre
+			var lbl_mail = document.createElement('label');
+			lbl_mail.setAttribute("id", "mail" + cont);
+  			lbl_mail.innerHTML = 'E-mail ' + cont;
+
 			//campo oculton para meter valor de codigo de contactos
 			var text_codcto = document.createElement('input');
 			text_codcto.setAttribute("type","hidden");
@@ -135,10 +150,13 @@ function comprobarNifCif(abc){
 			//Aqui introducimos los inputs hijos creados dentros de sus respectivos padres ya existentes en el codigo HTML
 			document.getElementById('div_nomcto').appendChild(salto_linea1);
 			document.getElementById('div_nomcto').appendChild(text_codcto);
+			document.getElementById('div_nomcto').appendChild(lbl_nombre);
 			document.getElementById('div_nomcto').appendChild(text_nomcto);
 			document.getElementById('div_telcto').appendChild(salto_linea2);
+			document.getElementById('div_telcto').appendChild(lbl_tel);
 			document.getElementById('div_telcto').appendChild(text_telcto);
 			document.getElementById('div_emailcto').appendChild(salto_linea3);
+			document.getElementById('div_emailcto').appendChild(lbl_mail);
 			document.getElementById('div_emailcto').appendChild(text_emailcto);
 
 			//aumentamos el valor del contador
@@ -152,16 +170,24 @@ function comprobarNifCif(abc){
 				var salto2 = document.getElementById('segundo_salto' + cont);
 				var salto3 = document.getElementById('tercer_salto' + cont);
 				var id_cto = document.getElementById('id_cto' + cont);
+				var lbl_nombre = document.getElementById('nombre' + cont);
 				var nom_cto = document.getElementById('nombre_cto' + cont);
+				var lbl_tel = document.getElementById('tel' + cont);
 				var tlf_cto = document.getElementById('tlf_cto' + cont);
+				var lbl_mail = document.getElementById('mail' + cont);
 				var email_cto = document.getElementById('email_cto' + cont);
+				
+
 
 				salto1.parentNode.removeChild(salto1);
 				salto2.parentNode.removeChild(salto2);
 				salto3.parentNode.removeChild(salto3);
 				id_cto.parentNode.removeChild(id_cto);
+				lbl_nombre.parentNode.removeChild(lbl_nombre)
 				nom_cto.parentNode.removeChild(nom_cto);
+				lbl_tel.parentNode.removeChild(lbl_tel);
 				tlf_cto.parentNode.removeChild(tlf_cto);
+				lbl_mail.parentNode.removeChild(lbl_mail);
 				email_cto.parentNode.removeChild(email_cto);
 
 				cont--;

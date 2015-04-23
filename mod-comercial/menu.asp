@@ -1,19 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-        <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <script src="js/jquery.js" type="text/javascript"></script>
         <script src="js/bootstrap.js"></script>
         <script src="js/bootstrap-confirmation.js"></script>
-        
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Gesti&oacuten Comercia - Inicio</title>
 </head>
 <body>
-	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
+	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if%>
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -22,7 +19,55 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="inicio.asp" >Moneleg - Gestion Comercial</a>
+		<%
+		 	
+			if pag=0 then
+
+					seccion="Inicio"
+			end if
+			if pag=1 then
+
+					seccion="Nuevo Cliente"
+			end if
+			if pag=2 then
+
+					seccion="Búsqueda Cliente"
+			end if
+			if pag=3 then
+
+					seccion="Modificar Cliente"
+			end if
+			if pag=4 then
+
+					seccion="Listar Cliente"
+			end if
+			if pag=5 then
+
+					seccion="Nueva Visita"
+			end if
+			if pag=6 then
+
+					seccion="Búsqueda Visita"
+			end if
+			if pag=7 then
+
+					seccion="Modificar Visita"
+			end if
+			if pag=8 then
+
+					seccion="Buscar Presupuesto"
+			end if
+			if pag=9 then
+
+					seccion="Cargando..."
+			end if
+
+
+				
+
+				
+		%>
+			<a class="navbar-brand" href="inicio.asp" ><%=seccion%></a>
 		</div>
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">

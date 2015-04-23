@@ -1,4 +1,5 @@
-<html> 
+<!DOCTYPE html>
+<html lang="es">
 <head> 
    <title></title>
    <link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
@@ -7,6 +8,7 @@
    <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
 </head> 
 <body>
+  <% pag=9 %>
   <!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
   <div class="progress progress-striped active">
@@ -17,6 +19,7 @@
   </div>
 </div>
 <% 
+
   Dim cod_cli,cif_cli,nom_cli,dir_cli,prov_cli,pob_cli,tlf_cli,id_cto,nom_cto,telf_cto,correo_cto,cad_prov,cad_pob,contador
   cod_cli = request.form("codigo_cliente")
   cif_cli = request.form("cif")

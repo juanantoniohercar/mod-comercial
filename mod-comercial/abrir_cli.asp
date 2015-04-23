@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
-        <title>Gesti&oacuten Comercia - Login</title>
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Gesti&oacuten Comercia - Inicio</title>
+	<title>Gesti&oacuten Comercia - Abrir cliente</title>
 </head>
 <body>
-
+	<% pag=4 %>
 	<!--#include file="menu.asp"-->
 	
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if %>
@@ -20,17 +19,18 @@
 		id_prov=request.querystring("provincia")
 		 call datos_cli_cto(id_cli, "CLI")
 		idprov = CStr(idprov)
-		 
+
+		
 		
 	%>
 <div class="container">
 	<div class="form-group col-lg-12"><br>
-		<button type="submit" class="btn btn-default btn-sm pull-right">
+		<!--<button type="submit" class="btn btn-default btn-sm pull-right">
     			<span class="glyphicon glyphicon-print"></span>
 		</button>
 		<button type="submit" class="btn btn-default btn-sm pull-right">
     			<span class="glyphicon glyphicon-floppy-save"></span>
-		</button>
+		</button>-->
  		<h3>Datos cliente</h3>
 		<hr class="" color="DFDCDC">
 	</div>

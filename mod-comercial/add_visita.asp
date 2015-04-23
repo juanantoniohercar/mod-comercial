@@ -1,12 +1,14 @@
-<html> 
+<!DOCTYPE html>
+<html lang="es">
 <head> 
    <title></title>
    <link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
   <script src="jquery-2.1.3.min.js" type="text/javascript"></script>
-   <meta http-equiv="refresh" content="2;URL=gest_comercial.asp">
-   <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
+  <meta http-equiv="refresh" content="2;URL=gest_comercial.asp">
+ <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
 </head> 
 <body>
+  <% pag=9 %>
   <!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
   <div class="progress progress-striped active">
@@ -17,6 +19,7 @@
   </div>
 </div>
 <% 
+
   Dim gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des
 
     gc_id=request.form("addv_gcid")

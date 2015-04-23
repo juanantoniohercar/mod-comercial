@@ -1,4 +1,5 @@
-<html> 
+<!DOCTYPE html>
+<html lang="es">
 <head> 
    <title></title>
    <link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
@@ -8,6 +9,7 @@
   </script>
 </head> 
 <body>
+  <% pag=9 %>
   <!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
   <div class="progress progress-striped active">
@@ -17,7 +19,7 @@
     <span class="sr-only">100% completado</span>
   </div>
 </div>
-<% 
+<%
   Dim gc_id, gc_hora, gc_fec, gc_est, gc_emp, gc_pre, gc_cli, gc_cli_cto, gc_des
     
     gc_id=request.form("modv_ges_com_id")

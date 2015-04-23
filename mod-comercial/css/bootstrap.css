@@ -3107,7 +3107,7 @@ fieldset[disabled] .btn-link:focus {
 }
 .btn-lg,
 .btn-group-lg > .btn {
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 18px;
   line-height: 1.33;
   border-radius: 6px;
@@ -6330,3 +6330,26 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+
+/*Personalizando boostrap*/
+.btn-g,
+.btn-group-lg > .btn {
+  padding: 50px 16px;
+  font-size: 16px;
+  line-height: 1.33;
+  border-radius: 4px;
+}
+
+.input-g,
+.form-group-lg .form-control {
+
+  width:200px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+
+

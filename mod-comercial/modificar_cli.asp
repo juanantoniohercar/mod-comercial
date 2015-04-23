@@ -1,4 +1,5 @@
-<html> 
+<!DOCTYPE html>
+<html lang="es">
 <head> 
    <title></title>
    <link href="css/bootstrap-notify.css" rel="stylesheet" type="txt/css">
@@ -11,9 +12,11 @@
   </script>
 </head> 
 <body>
+  <% pag=9 %>
   <!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
   <%
+
     id_cli=request.querystring("id")
     id_prov=request.querystring("provincia")
      call datos_cli_cto(id_cli, "CLI")
