@@ -1,3 +1,8 @@
+
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,7 +36,7 @@
 			end if
 			if pag=2 then
 
-					seccion="Búsqueda Cliente"
+					seccion="B&uacutesqueda Cliente"
 			end if
 			if pag=3 then
 
@@ -47,7 +52,7 @@
 			end if
 			if pag=6 then
 
-					seccion="Búsqueda Visita"
+					seccion="B&uacutesqueda Visita"
 			end if
 			if pag=7 then
 
@@ -62,10 +67,6 @@
 					seccion="Cargando..."
 			end if
 
-
-				
-
-				
 		%>
 			<a class="navbar-brand" href="inicio.asp" ><%=seccion%></a>
 		</div>

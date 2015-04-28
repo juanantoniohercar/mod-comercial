@@ -1,25 +1,37 @@
-<!DOCTYPE html>
+
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%><!DOCTYPE html>
 <html lang="es">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html ; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="txt/css">
         <link href="css/login.css" rel="stylesheet" type="txt/css">
         <script type="text/javascript" src="js/funciones.js"></script>
-        <script type="text/javascript">
-        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gesti&oacuten Comercia - Nuevo Cliente</title>
 </head>
 <body>
+	<script type="text/javascript">
+		window.onload=function(){
+			var pos=window.name || 0;
+			window.scrollTo(0,pos);
+		}
+		window.onunload=function(){
+			window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+		}
+	</script>
 	<% pag=1 %>
 	<!--#include file="menu.asp"-->
 	<!--#include file="funciones.asp"-->
 	<% autorizar session("autorizacion") %>
+	
 <div class="container">
 	<h3>Nuevo Cliente</h3>
 	<hr color="DFDCDC">
 	
-<form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" >
+<form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" onsubmit="return validacioncli()">
 
 	
 
@@ -42,7 +54,7 @@
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="prov" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
+		<select class="form-control" id="prov" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value" onselect="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
   			<option value=0>Seleccione una provincia</option>
   			<%
 	  			SQL_prov="select * from PROV order by prov_nom asc"
@@ -53,7 +65,7 @@
 				prov_nom = RS_prov("prov_nom")
 				prov_id = RS_prov("prov_id")
 				p = request.querystring("prov_nom")
-				response.write p
+				pro="Cadiz"
 				    if p <> "" then
 				    	if p = prov_nom then
 					    response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
@@ -61,7 +73,13 @@
 				        response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
 				        end if
 					else
+						if pro = prov_nom then
+
+						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
+						else
 						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
+
+						end if
 					end if
 
 				RS_prov.movenext
@@ -74,7 +92,7 @@
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select class="form-control" id="pob" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
+		<select class="form-control" id="poblacion" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
 			<option >Seleccione una poblaci&oacuten</option>
 			<% 
 				if request.querystring("provincia") <> "" then
@@ -87,7 +105,9 @@
 				pob_nombre=RS_pob("pob_nom")
 				cadena=Server.URLEncode(pob_nombre)
 				pob_id=RS_pob("pob_id")
+				pob_prov=RS_pob("pob_prov")
 				pp = request.querystring("pob_nombre")
+				pobprov="11"
 				
 				    if pp <> "" then
 				    	if pp = pob_nombre then
@@ -96,12 +116,42 @@
 				        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
 				        end if
 					else
-					response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
+							response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
+					
 					end if
 		
   				RS_pob.movenext
   				loop
   				RS_pob.close
+  				else
+  				SQL_pob="select * from POB where pob_prov=11 order by pob_nom asc"
+				set RS_pob=createobject("ADODB.Recordset")
+				RS_pob.open SQL_pob,Conexion
+
+				do while not RS_pob.eof
+				pob_nombre=RS_pob("pob_nom")
+				cadena=Server.URLEncode(pob_nombre)
+				pob_id=RS_pob("pob_id")
+				pob_prov=RS_pob("pob_prov")
+				pp = request.querystring("pob_nombre")
+				pobprov="11"
+				
+				    if pp <> "" then
+				    	if pp = pob_nombre then
+					    response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
+				        elseif pp <> pob_nombre then
+				        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
+				        end if
+					else
+							response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
+					
+					end if
+		
+  				RS_pob.movenext
+  				loop
+  				RS_pob.close
+
+
   				end if
 
   			%>	
@@ -142,28 +192,24 @@
     		<span class="glyphicon glyphicon-minus-sign"></span>
 		</button>
 	</div>
-<!--
-	<div class="form-group col-lg-5" id="divnomcto">
-		<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cc_id")%>">
-		<label for="nombre_cto">Nombre</label>
-		<input type="text" class="form-control" id="nombre_cto0" placeholder="NOMBRE Y APELLIDOS" maxlength="45" name="nombre_cto0" value='<%=request.querystring("nombre_cto")%>'>
-	</div>
-	
-	<div class="form-group col-lg-3" id="divtelcto">
-		<label for="telefono_cto">Tel&eacutefono</label>
- 		<input type="tel" class="form-control" id="telefono_cto0" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto0" value='<%=request.querystring("tlf_cto")%>'>
-	</div>
-	
-	<div class="form-group col-lg-4" id="divemailcto">
-		<label for="email_cto">E-mail</label>
-		<input type="email" class="form-control" id="email_cto0" placeholder="email@ejemplo.com" name="email_cto0" value='<%=request.querystring("email_cto")%>'>
-	</div>-->
+
 	<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cc_id")%>">
 			<div class="form-group" id="div_nomcto" ></div>
 	
-	<div class="form-group col-lg-2"  id="div_submit">
-		<input type="submit" name="crear_cliente" value="Crear" class="btn btn-primary btn-lg">
+	<div class="form-group"  id="div_submit">
+		<div class="col-xs-6 col-sm-6 col-md-6">
+		<button type="submit" name="crear_cliente" class="btn btn-primary btn-lg">
+			<span>Crear</span>
+		</button>
+		</div>
+		<div class="pull-right col-xs-6 col-sm-6 col-md-6">
+		<button type="button" class="btn btn-warning btn-lg pull-right" onclick='window.location.href="inicio.asp"'>
+    		<span class="">Volver</span>
+		</button>
+		</div>
+		
 	</div>
+	
 	<input type="hidden" name="contador" id="contador" >
 	<script type="text/javascript">
 	var cod = document.getElementById('id_cto0').value;

@@ -1,3 +1,7 @@
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -54,6 +58,13 @@
   <div class="form-group">
      <label class="col-xs-12 col-sm-12 col-lg-12" ><font color="#FF4E4E">Pendientes</font></label>
     <%call bus_visita()%>
+  </div>
+  <div class="form-group">
+    <div class="pull-right col-xs-6 col-sm-6 col-md-6">
+      <button type="button" class="btn btn-warning pull-right btn-lg" onclick='window.location.href="inicio.asp"'>
+          <span class="">volver</span>
+      </button>
+    </div>
   </div>
 </div>
 </body>

@@ -269,5 +269,96 @@ function mostrar_btn_add(){
    		location.reload();
 		}
 
+//validar formulario añadir cliente
 
+function validacioncli(){
+var nifcif=document.getElementById("cif").value;
+var cli=document.getElementById("nombre").value;
+var dir=document.getElementById("direccion").value;
+var prov=document.getElementById("prov").selectedIndex;
+var pob=document.getElementById("poblacion").selectedIndex;
+var tel=document.getElementById("telefono").value;
+if (nifcif == null || nifcif.length == 0 || /^\s+$/.test(nifcif)) {
+	//si la condicion es correcta
+	alert("El campo NIF/CIF no puede estar vacío.");
+	return false;
+}
+else if (cli == null || cli.length == 0 || /^\s+$/.test(cli)) {
+	//Si la condición es correcta
+	alert("El campo NOMBRE no puede estar vacío.");
+	return false;
+
+}
+else if (dir == null || dir.length == 0 || /^\s+$/.test(dir)) {
+	//si la condicion es correcta
+	alert("El campo DIRECCIÓN no puede estar vacío.");
+	return false;
+}
+else if (prov == null || prov == 0) {
+	//si la condición es correcta
+	alert("Debes seleccionar una PROVINCIA.");
+	return false;
+}
+else if (pob == null || pob == 0) {
+	//Si la condición es correcta
+	alert("Debes seleccionar una POBLACIÓN.");
+	return false;
+}
+else if (!(/^\d{9}$/.test(tel)) ) {
+	//Si la condición es correcta 
+	alert("Formato del telefono: 000000000");
+	return false;
+}
+return true;
+
+}
+
+//validar formulario visita
+function validacionvisita(){
+var cliente=document.getElementById("bus_idcli2").value;
+var contacto=document.getElementById("addv_nomcto").selectedIndex;
+var estado=document.getElementById("addv_estado").selectedIndex;
+
+if (cliente == null || cliente == 0 || cliente.length == 0 || /^\s+$/.test(cliente)) {
+	//si la condicion es correcta
+	alert("Debes selecionar un cliente de la lista.");
+	return false;
+}
+else if (contacto == null || contacto == 0) {
+	//Si la condición es correcta
+	alert("Debes seleccionar un contacto.");
+	return false;
+
+}
+else if (estado == null || estado == 0) {
+	//si la condicion es correcta
+	alert("Debes seleccionar un estado.");
+	return false;
+}
+
+return true;
+
+}
+
+//validar formulario modificar visita
+function validacionmodvisita(){
+
+var contac=document.getElementById("modv_nomcto").selectedIndex;
+var esta=document.getElementById("modv_estado").selectedIndex;
+
+if (contac == null || contac == 0) {
+	//Si la condición es correcta
+	alert("Debes seleccionar un contacto.");
+	return false;
+
+}
+else if (esta == null || esta == 0) {
+	//si la condicion es correcta
+	alert("Debes seleccionar un estado.");
+	return false;
+}
+
+return true;
+
+}
 

@@ -1,3 +1,7 @@
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +15,16 @@
 	
 	
 </head>
-<body >
+<body>
+	<script type="text/javascript">
+		window.onload=function(){
+			var pos=window.name || 0;
+			window.scrollTo(0,pos);
+		}
+		window.onunload=function(){
+			window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+		}
+	</script>
 	<% pag=3 %>
 	<!--#include file="menu.asp"-->
 	<!--#include file="funciones.asp"-->
@@ -26,7 +39,7 @@
 <div class="container">
 	<h3>Cliente a modificar</h3>
 	<hr color="DFDCDC">
-<form action="modificar_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" >
+<form action="modificar_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" onsubmit="return validacioncli()" >
 
 	<div class="form-group col-lg-2">
 		<label for="codigo_cliente">C&oacutedigo Cliente</label>
@@ -47,8 +60,8 @@
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="provi" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&mostrar=' + 1">
- 			<option value=0 label="Seleciona una provincia"></option>
+		<select class="form-control" id="prov" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&mostrar=' + 1">
+ 			<option value="" label="Seleciona una provincia"></option>
  			<option value="<%=idprov%>" selected><%=prov%></option>
 
  			<%
@@ -81,8 +94,8 @@
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select title= "Seleccione una poblacion" class="form-control" id="pob" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value">
-			<option value=0 label="Seleciona una población"></option>
+		<select title= "Seleccione una poblacion" class="form-control" id="poblacion" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value">
+			<option value="" label="Seleciona una población"></option>
 			
 			<% 
 				espacios=Server.URLEncode(pob)
@@ -148,7 +161,10 @@
  		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value="<%=tlf%>" required>
  	</div>
 	<div class="form-group col-lg-9">
-		<input type="submit" name="modificar_cliente" value="Modificar Cliente" class="btn btn-primary btn-lg">
+		<button type="submit" name="modificar_cliente" class="btn btn-primary btn-lg">
+			<span>Modificar Cliente</span>
+		</button>
+		
 	</div>
 </form>
 <div class="form-group col-lg-12"><br>
@@ -193,9 +209,19 @@
 		<label for="email_cto">E-mail</label>
 		<input type="email" class="form-control" id="email_cto" placeholder="email@ejemplo.com" name="email_cto" value='<%=email_cto%>'>
 	</div>
-	<div class="form-group col-lg-9">
-		<input type="submit" name="modificar_contacto"  value="Modificar Contacto" class="btn btn-primary btn-lg" >
+	<div class="form-group">
+	<div class="col-xs-6 col-sm-6 col-md-6">
+		<button type="submit" name="modificar_contacto" class="btn btn-primary btn-lg">
+			<span>Modificar Contacto</span>
+		</button>
+		
 	</div>
+	<div class="pull-right col-xs-6 col-sm-6 col-md-6">
+      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="javascript:history.go(-1);">
+          <span class="">Atras</span>
+      </button>
+    </div>
+</div>
 </form>
 </div>
 
@@ -215,11 +241,22 @@
 		<label for="email_cto">E-mail</label>
 		<input type="email" class="form-control" placeholder="email@ejemplo.com" name="mailcto" >
 	</div>
-	<div class="form-group col-lg-9">
-		<input type="submit" name="anadir_contacto"  value="Añadir Contacto" class="btn btn-success btn-lg"  >
+	<div class="form-group">
+	<div class="col-xs-6 col-sm-6 col-md-6">
+		<button type="submit" name="anadir_contacto"  value="Añadir Contacto" class="btn btn-success btn-lg">
+			<span>Añadir Contacto</span>
+		</button>
 	</div>
+
+    <div class="pull-right col-xs-6 col-sm-6 col-md-6">
+      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="javascript:history.go(-1);">
+          <span class="">Atras</span>
+      </button>
+    </div>
+  </div>
 </form>
 </div>
+
 </div>
 </body>
 </html>

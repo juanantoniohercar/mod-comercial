@@ -1,3 +1,7 @@
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head> 
@@ -35,11 +39,7 @@
     on error resume next
     gc_emp=cad_emp(0)
     gc_emp=cstr(gc_emp)
-    cad_pre=request.form("modv_pre")
-    cad_pre=split(cad_pre, "&")
-    on error resume next  
-    gc_pre=cad_pre(0)
-    gc_pre=cstr(gc_pre)
+    gc_pre=request.form("modv_pre")
     gc_cli=request.form("modv_idcli")
     cad_cli_cto=request.form("modv_nomcto")
     cad_cli_cto=split(cad_cli_cto, "&")

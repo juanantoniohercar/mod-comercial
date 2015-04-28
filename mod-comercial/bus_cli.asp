@@ -1,3 +1,7 @@
+<%Response.ContentType = "text/html"
+Response.AddHeader "Content-Type", "text/html;charset=UTF-8"
+Response.CodePage = 65001
+Response.CharSet = "UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -63,6 +67,11 @@
 		<button type="button" class="btn btn-success" onclick="window.location.href='bus_cli.asp'">Limpiar listado</button>
 	</div>
 	<%busqueda()%>
+	<div class="pull-right col-xs-6 col-sm-6 col-md-6">
+		<button type="button" class="btn btn-warning btn-lg pull-right" onclick='window.location.href="inicio.asp"'>
+    		<span class="">Volver</span>
+		</button>
+		</div>
 </div>
 </body>
 </html>
