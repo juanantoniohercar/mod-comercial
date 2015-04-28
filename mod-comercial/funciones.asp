@@ -47,8 +47,6 @@ Response.CharSet = "UTF-8"%>
 	Dim consulta,objRS,nombre_usuario,password, SQL_idcomercial, SQL_comerciales, com_nom, com_id, SQL_bus_cli
 
 
-
-
 	'****************Fin declaracion de variables********************'
 
 	'funcion para autorizar el inicio de sesion'
@@ -57,37 +55,26 @@ Response.CharSet = "UTF-8"%>
   		nombre_usuario=request.form("username")
   		password=request.form("password")
 
-		consulta = "select * from EMP"
+		consulta = "select USR_ID, USR_LOG, USR_PWD from USR"
 		set objRS = conexion.Execute(consulta)
 
    		while (not objRS.Eof) 
-       		if objRS("emp_nom") = trim(nombre_usuario) and objRS("emp_pw") = trim(password) then
-       		'si todo es ok nos envia a otra pagina'
-       		SQL_idcomercial="select emp_id from EMP where emp_nom='"&nombre_usuario&"'"
-       		set RS_idcomercial=createobject("ADODB.Recordset")
-       		RS_idcomercial.open SQL_idcomercial,Conexion
-       		do while not RS_idcomercial.eof
-       			session("emp_id")=RS_idcomercial("emp_id")
-
-       		RS_idcomercial.movenext
-       		loop
-       		RS_idcomercial.close
-
+       		if objRS("USR_LOG") = trim(nombre_usuario) and objRS("USR_PWD") = trim(password) then
+       		'si todo es ok nos envia a otra pagina
+       		session("emp_id")=objRS("USR_ID")
        		session	("nombre_comercial")=trim(request.form("username"))
        		session("autorizacion")=1
        		response.redirect("inicio.asp")
        		response.end
-       		 
        		else
-       			'si no coincide los datos o no existen error'
-       			session("autorizacion")=-1
-       			alert_formularios "USUARIO O CONTRASE&NtildeA NO V&AacuteLIDOS","warning"
-
+       			objRS.MoveNext
        		end if
-      	objRS.MoveNext
    		wend
+   		session("autorizacion")=-1
+       	alert_formularios "USUARIO O CONTRASE&NtildeA NO V&AacuteLIDOS","warning"
 
    		set objRS = nothing 
+   		iniciosesion = false
 	end function
 
 	'metodo para autorizar entrar a una pagina si se ha iniciado sesión o no
