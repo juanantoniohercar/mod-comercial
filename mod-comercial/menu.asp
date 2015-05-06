@@ -16,7 +16,7 @@ Response.CharSet = "UTF-8"%>
 </head>
 <body>
 	<% if session("autorizacion") <> 1 then response.redirect("Default.asp") end if%>
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 				<span class="sr-only">Menu</span>

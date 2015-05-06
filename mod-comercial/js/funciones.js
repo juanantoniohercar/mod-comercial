@@ -315,11 +315,11 @@ return true;
 
 //validar formulario visita
 function validacionvisita(){
-var cliente=document.getElementById("bus_idcli2").value;
+var client=document.getElementById("bus_idcli2").value;
 var contacto=document.getElementById("addv_nomcto").selectedIndex;
 var estado=document.getElementById("addv_estado").selectedIndex;
 
-if (cliente == null || cliente == 0 || cliente.length == 0 || /^\s+$/.test(cliente)) {
+if (client == null || client == 0 || client.length == 0 || /^\s+$/.test(client)) {
 	//si la condicion es correcta
 	alert("Debes selecionar un cliente de la lista.");
 	return false;
@@ -362,3 +362,54 @@ return true;
 
 }
 
+//funcion para valirdar si tengo sellecionado el cliente para buscar el presupuesto
+
+function validar(){
+var valor = document.getElementById("select_nom").selectedIndex;
+if (valor == null || valor == 0) {
+	//Si la condicion es correcta
+	alert("Debes selecionar un cliente para buscar su presupuesto.");
+	return false;
+}
+	
+window.location.href='presupuesto.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&cliente=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&num=' + form_gest_com.num.value + '&des=' + form_gest_com.addv_desc.value;
+
+
+}
+
+//funcion para volver atras en el modificar cliente
+function atrasbus(){
+
+	var bus_dnicif = document.getElementById("bus_dnicif").value;
+	var bus_nombre = document.getElementById("bus_nombre").value; 
+  	var bus_dom = document.getElementById("bus_dom").value;
+  	var bus_localidad = document.getElementById("bus_localidad").value;
+  	
+  	if (bus_dnicif !== "") {
+
+   		setTimeout("location.href='bus_cli.asp?bus_dnicif=' + bus_dnicif.value", 0000);
+
+   	}
+   	else if (bus_nombre != "") {
+   		
+   		setTimeout("location.href='bus_cli.asp?bus_nombre=' + bus_nombre.value", 0000);
+
+   	}
+   else if (bus_dom != "") {
+
+   	setTimeout("location.href='bus_cli.asp?bus_dom=' + bus_dom.value", 0000);
+
+   }
+   else if (bus_localidad != "") {
+
+   	setTimeout("location.href='bus_cli.asp?bus_loclidad=' + bus_localidad.value", 0000);
+
+   }
+
+ }
+
+
+				
+  				
+
+  		

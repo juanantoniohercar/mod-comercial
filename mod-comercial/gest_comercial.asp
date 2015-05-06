@@ -52,7 +52,7 @@ Response.CharSet = "UTF-8"%>
 <form name="form_nombre" id="form_nombre" class="form-horizontal" role="form">
 	<div class="form-group col-xs-12 col-sm-8 col-md-6" id="div_cliente">
 		<label>Cliente</label>
-			<select class="form-control" id="select_nom" name="select_nom" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&id=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&pres=' + form_gest_com.addv_pre.value">
+			<select class="form-control" id="select_nom" name="select_nom" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&cliente=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&presupuesto=' + form_gest_com.addv_pre.value + '&des=' + form_gest_com.addv_desc.value">
 					
 					<%call bus_cliente()%>
 			</select>
@@ -62,13 +62,13 @@ Response.CharSet = "UTF-8"%>
 
 <form action="add_visita.asp" method="post" name="form_gest_com" id="form_gest_com" class="form-horizontal" role="form" onsubmit="return validacionvisita()">
 	<input type="hidden" class="form-control" id="bus_nomcli2" maxlength="50" name="bus_nomcli2" value="<%=nombre_cliente%>">
-	<input type="hidden" class="form-control" id="bus_idcli2" maxlength="50" name="bus_idcli2" value="<%=request.querystring("id")%>">
+	<input type="hidden" class="form-control" id="bus_idcli2" maxlength="50" name="bus_idcli2" value="<%=request.querystring("cliente")%>">
 	<input type="hidden" class="form-control" id="addv_gcid" maxlength="50" name="addv_gcid" value="<%=generar_cod("GES_COM","gc_id")%>">
-	<input type="hidden" class="form-control" id="addv_pre" maxlength="50" name="addv_pre" value="<%=request.querystring("pre")%>">
+	<input type="hidden" class="form-control" id="addv_pre" maxlength="50" name="addv_pre" value="<%=request.querystring("presupuesto")%>">
 	
 	<div class="from-group col-xs-12 col-sm-6 col-md-6" id="div_comercial">
 		<label>Comercial Asignado</label>
-		<select class="form-control" id="addv_com" name="addv_com" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&id=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&pres=' + form_gest_com.addv_pre.value">
+		<select class="form-control" id="addv_com" name="addv_com" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&cliente=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&presupuesto=' + form_gest_com.addv_pre.value + '&des=' + form_gest_com.addv_desc.value">
 
 				<optgroup label="Sesion iniciada por el comercial ">
   					<option value="<%=session("emp_id")%>"><%=session("nombre_comercial")%></option>
@@ -86,7 +86,7 @@ Response.CharSet = "UTF-8"%>
 	</div>
 	<div class="form-group col-xs-12 col-sm-6 col-md-6">
 		<label>Nombre de Cliente</label>
-		<p class="form-control-static"><%=request.querystring("cliente")%></p>
+		<p class="form-control-static"><%=request.querystring("cliente_nom")%></p>
 	</div>
 	<div class="form-group col-xs-12 col-sm-6 col-md-6">
 		<label>Telefono</label>
@@ -94,8 +94,8 @@ Response.CharSet = "UTF-8"%>
 	</div>
 	<div class="form-group col-xs-12 col-sm-6 col-md-6">
 		<label for="addv_nomcto">Nombre Contacto</label>
-		<select class="form-control" id="addv_nomcto" name="addv_nomcto" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&id=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&pres=' + form_gest_com.addv_pre.value">
-  				<option value=0>Selecciona un contacto</option>
+		<select class="form-control" id="addv_nomcto" name="addv_nomcto" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&cliente=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&presupuesto=' + form_gest_com.addv_pre.value + '&des=' + form_gest_com.addv_desc.value">
+  				
   				<%call bus_cli_cto()%>
 			</select>
 	</div>
@@ -125,7 +125,7 @@ Response.CharSet = "UTF-8"%>
 
 	<div class="form-group col-xs-12 col-sm-4 col-md-4">
 		<label for="addv_estado">Estado</label>
-		<select class="form-control" id="addv_estado" name="addv_estado" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&id=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&pres=' + form_gest_com.addv_pre.value">
+		<select class="form-control" id="addv_estado" name="addv_estado" onchange= "location.href='gest_comercial.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&cliente=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&presupuesto=' + form_gest_com.addv_pre.value + '&des=' + form_gest_com.addv_desc.value">
   				<option value=0>Selecciona un estado</option>
   				<%call select_est()%>
 		</select>
@@ -133,16 +133,16 @@ Response.CharSet = "UTF-8"%>
 	<div class="form-group col-xs-12 col-sm-6 col-md-6">
 		<label for="addv_pre">Presupuesto</label>
 		<input type="hidden" class="form-control" id="num" maxlength="50" name="num" value="1">
-		<button type="button" class="btn btn-info" onclick="window.location.href='presupuesto.asp?bus_nomcli=' + form_gest_com.bus_nomcli2.value + '&id=' + form_nombre.select_nom.options[form_nombre.select_nom.selectedIndex].value + '&contacto=' + form_gest_com.addv_nomcto.options[form_gest_com.addv_nomcto.selectedIndex].value + '&com_asignado=' + form_gest_com.addv_com.options[form_gest_com.addv_com.selectedIndex].value + '&estado=' + form_gest_com.addv_estado.options[form_gest_com.addv_estado.selectedIndex].value + '&fecha=' + form_gest_com.addv_fecha.value + '&hora=' + form_gest_com.addv_hora.value + '&num=' + form_gest_com.num.value">
+		<button type="button" class="btn btn-info" onclick="validar()">
     		<span class="glyphicon glyphicon-search"></span>
 		</button>
-		<p class="form-control-static"><%=request.querystring("pre")%></p>
+		<p class="form-control-static"><%=request.querystring("presupuesto")%></p>
 	</div>
 		
 	
 	<div class="form-group col-xs-12 col-sm-12 col-md-12">
 		<label for="addv_desc">Descripci&oacuten</label>
-		<textarea class="form-control" rows="4" id="addv_desc" name="addv_desc"></textarea>
+		<textarea class="form-control" rows="4" id="addv_desc" name="addv_desc"><%=request.querystring("des")%></textarea>
 	</div>
 	<div class="form-group" id="div_submit">
 		<div class="col-xs-6 col-sm-6 col-md-6">

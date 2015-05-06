@@ -24,21 +24,21 @@ Response.CharSet = "UTF-8"%>
 </div>
 <% 
 
-  Dim gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des
+  Dim gc_id,gc_hora,gc_fec,gc_est,gc_com,gc_pre,gc_cli,gc_cli_cto,gc_des,gc_usu
 
     gc_id=request.form("addv_gcid")
     gc_hora=request.form("addv_hora")
-    gc_fec=request.form("addv_fecha")
+    gc_fec=CDate(request.form("addv_fecha"))
     cad_est=request.form("addv_estado")
     cad_est=split(cad_est,"&")
     on error resume next
     gc_est=cad_est(0)
     gc_est=cstr(gc_est)
-    cad_emp=request.form("addv_com")
-    cad_emp=split(cad_emp,"&")
+    cad_com=request.form("addv_com")
+    cad_com=split(cad_com,"&")
     on error resume next
-    gc_emp=cad_emp(0)
-    gc_emp=cstr(gc_emp)
+    gc_com=cad_com(0)
+    gc_com=cstr(gc_com)
     gc_pre=request.form("addv_pre")
     gc_cli=request.form("bus_idcli2")
     cad_cli_cto=request.form("addv_nomcto")
@@ -47,9 +47,10 @@ Response.CharSet = "UTF-8"%>
     gc_cli_cto=cad_cli_cto(0)
     gc_cli_cto=cstr(gc_cli_cto)
     gc_des=request.form("addv_desc")
+    gc_usu=session("emp_id")
     
 
-  call insert_gescom(gc_id,gc_hora,gc_fec,gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des)
+  call insert_gescom(gc_id,gc_hora,gc_fec,gc_est,gc_com,gc_pre,gc_cli,gc_cli_cto,gc_des,gc_usu)
 %>
 
 

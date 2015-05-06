@@ -31,7 +31,7 @@ Response.CharSet = "UTF-8"%>
 <div class="container">
 	<h3>Busqueda Cliente</h3>
 	<hr color="DFDCDC">
-<form action="bus_cli.asp" method="POST" name="form_busqueda_cli" id="form_busqueda_cli" class="form-horizontal" role="form">
+<form action="bus_cli.asp" method="get" name="form_busqueda_cli" id="form_busqueda_cli" class="form-horizontal" role="form">
 	<div class="form-group col-lg-4">
 		<label for="filtro">Filtro</label>
 		<select class="form-control" id="cbb_filtro" onchange="mostrar(this);">
@@ -56,10 +56,13 @@ Response.CharSet = "UTF-8"%>
 			<input type="text" class="form-control" placeholder="Localidad"  id="localidad" name="bus_localidad" maxlength="50">
 		</div>
 		<div class="form-group col-lg-12">
-			<input type="submit" name="bus_clientes" value="Buscar" class="btn btn-info" >
+			<button  type="submit" class="btn btn-info">
+				<span>Buscar</span>
+
+			</button>
 			
 		</div>
-
+		
 </form>
 	<div class="form-group col-lg-12"><br>
  		<h3>Datos cliente</h3>

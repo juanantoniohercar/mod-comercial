@@ -11,8 +11,8 @@ Response.CharSet = "UTF-8"%>
  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
  		<script type="text/javascript" src="js/funciones.js"></script>
  		<script src="jquery-2.1.3.min.js" type="text/javascript"></script>
-	<title>Gesti&oacuten Comercia - Modificar Cliente</title>
-	
+	<title>Gesti&oacuten Comercia - Modificar Cliente</title>	
+	</script>
 	
 </head>
 <body>
@@ -34,11 +34,78 @@ Response.CharSet = "UTF-8"%>
 		id_prov=request.querystring("provincia")
 		 call datos_cli_cto(id_cli, "CLI")
 		idprov = CStr(idprov)
+
+		bus_dnicif=request.querystring("bus_dnicif")
+		bus_nombre=request.querystring("bus_nombre")
+		bus_dom=request.querystring("bus_dom")
+		bus_localidad=request.querystring("bus_localidad")
 		
 	%>
 <div class="container">
 	<h3>Cliente a modificar</h3>
 	<hr color="DFDCDC">
+	<%
+	 						if bus_dnicif <> "" then
+	 					%>
+	 							<input type="hidden" name="bus_dnicif" id="bus_dnicif" value="<%=request.querystring("bus_dnicif")%>">
+	 					<%
+	 							texto_prov="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_dnicif=' + document.getElementById('bus_dnicif').value + '&mostrar=' + 1"
+
+	 							texto_pob="location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_dnicif=' + document.getElementById('bus_dnicif').value"
+
+	 							texto_cto="location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&bus_dnicif=' + document.getElementById('bus_dnicif').value + '&mostrar=' + 0 "
+	 						else
+	 					%>
+	 							<input type="hidden" name="bus_dnicif" id="bus_dnicif">
+	 					<%
+	 						end if 
+
+	 						if bus_nombre <> "" then
+	 					%>
+	 							<input type="hidden" name="bus_nombre" id="bus_nombre" value="<%=request.querystring("bus_nombre")%>">
+	 					<%
+	 							texto_prov="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_nombre=' + document.getElementById('bus_nombre').value + '&mostrar=' + 1"
+
+	 							texto_pob="location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_nombre=' + document.getElementById('bus_nombre').value"
+
+	 							texto_cto="location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&bus_nombre=' + document.getElementById('bus_nombre').value + '&mostrar=' + 0 "
+	 						else
+	 					%>
+	 							<input type="hidden" name="bus_nombre" id="bus_nombre">
+	 					<%
+	 						end if 
+	 				
+	 						if bus_dom <> "" then
+	 					%>
+	 							<input type="hidden" name="bus_dom" id="bus_dom" value="<%=request.querystring("bus_dom")%>">
+	 					<%
+	 							texto_prov="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_dom=' + document.getElementById('bus_dom').value + '&mostrar=' + 1"
+
+	 							texto_pob="location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_dom=' + document.getElementById('bus_dom').value"
+
+	 							texto_cto="location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&bus_dom=' + document.getElementById('bus_dom').value + '&mostrar=' + 0 "
+	 						else
+	 					%>
+	 							<input type="hidden" name="bus_dom" id="bus_dom">
+
+	 					<%
+	 						end if 
+
+	 						if bus_localidad <> "" then
+	 					%>
+	 							<input type="hidden" name="bus_localidad" id="bus_localidad" value="<%=request.querystring("bus_localidad")%>">
+	 					<%
+	 							texto_prov="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_localidad=' + document.getElementById('bus_localidad').value + '&mostrar=' + 1"
+
+	 							texto_pob="location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&bus_localidad=' + document.getElementById('bus_localidad').value"
+
+	 							texto_cto="location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&bus_localidad=' + document.getElementById('bus_localidad').value + '&mostrar=' + 0 "
+	 						else
+	 					%>
+	 							<input type="hidden" name="bus_localidad" id="bus_localidad">
+	 					<%
+	 						end if
+	 					%>
 <form action="modificar_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" onsubmit="return validacioncli()" >
 
 	<div class="form-group col-lg-2">
@@ -60,7 +127,7 @@ Response.CharSet = "UTF-8"%>
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="prov" name="provincia" onchange="location.href='mod_cli.asp?provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value + '&mostrar=' + 1">
+		<select class="form-control" id="prov" name="provincia" onchange="<%=texto_prov%>">
  			<option value="" label="Seleciona una provincia"></option>
  			<option value="<%=idprov%>" selected><%=prov%></option>
 
@@ -94,7 +161,7 @@ Response.CharSet = "UTF-8"%>
 	</div>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
-		<select title= "Seleccione una poblacion" class="form-control" id="poblacion" name="poblacion" onchange= "location.href='mod_cli.asp?poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&tlf_cto=' + form_modificar_cto.tlf_cto.value + '&email_cto=' + form_modificar_cto.email_cto.value">
+		<select title= "Seleccione una poblacion" class="form-control" id="poblacion" name="poblacion" onchange="<%=texto_pob%>">
 			<option value="" label="Seleciona una población"></option>
 			
 			<% 
@@ -180,17 +247,17 @@ Response.CharSet = "UTF-8"%>
 </div>
 <div id="modificar_contacto">
 <form action="modificar_cto.asp" method="POST" name="form_modificar_cto" class="form-horizontal" >
+		<input type="hidden" id="valor_idcli" maxlength="50" name="valor_idcli" value="<%=request.querystring("id")%>">
+  		<input type="hidden" id="valor_idprov" maxlength="50" name="valor_idprov" value="<%=request.querystring("provincia")%>">
+  		<input type="hidden" id="valor_idpob" maxlength="50" name="valor_idpob" value="<%=request.querystring("poblacion")%>">
+
 		<div class="form-group col-lg-5">
 		<label for="nombre_cto">Filtro por Nombre</label>
 		<div class="form-inline">
-		<select class="form-control" id="nombre_cto" name="nombre_cto" onchange= "location.href='mod_cli.asp?contacto=' + form_modificar_cto.nombre_cto.options[form_modificar_cto.nombre_cto.selectedIndex].value + '&poblacion=' + form_modificar_cli.poblacion.options[form_modificar_cli.poblacion.selectedIndex].value + '&provincia=' + form_modificar_cli.provincia.options[form_modificar_cli.provincia.selectedIndex].value + '&id=' + form_modificar_cli.codigo_cliente.value + '&cif=' + form_modificar_cli.cif.value + '&nombre=' + form_modificar_cli.nombre.value + '&direccion=' + form_modificar_cli.direccion.value + '&tlf_cli=' + form_modificar_cli.tlf_cli.value + '&mostrar=' + 0 ">
+		<select class="form-control" id="nombre_cto" name="nombre_cto" onchange= "<%=texto_cto%>">
 			<option value=0>Seleccione un contacto</option>
 			<%call select_cto()%>
 		</select>
-			
-			<button type="button" class="btn btn-warning" onclick="cargar()">
- 					<span class="glyphicon glyphicon-refresh"></span>
-				</button>
 		</div>	
 		</div>
 	<% call datos_cto()%>
@@ -217,7 +284,7 @@ Response.CharSet = "UTF-8"%>
 		
 	</div>
 	<div class="pull-right col-xs-6 col-sm-6 col-md-6">
-      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="javascript:history.go(-1);">
+      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="atrasbus()">
           <span class="">Atras</span>
       </button>
     </div>
@@ -227,6 +294,9 @@ Response.CharSet = "UTF-8"%>
 
 <div id="anadir_contacto" style="display: none;">
 <form action="add_cto.asp" method="POST" name="form_add_cto" class="form-horizontal" >
+		<input type="hidden" id="valor_idcli" maxlength="50" name="valor_idcli2" value="<%=request.querystring("id")%>">
+  		<input type="hidden" id="valor_idprov" maxlength="50" name="valor_idprov2" value="<%=request.querystring("provincia")%>">
+  		<input type="hidden" id="valor_idpob" maxlength="50" name="valor_idpob2" value="<%=request.querystring("poblacion")%>">
 	<div class="form-group col-lg-5">
 		<label for="nombre_cto">Nombre</label>
 		<input type="hidden" name="idcontacto" value="<%=generar_cod("CLI_CTO","cc_id")%>">
@@ -247,16 +317,17 @@ Response.CharSet = "UTF-8"%>
 			<span>Añadir Contacto</span>
 		</button>
 	</div>
-
     <div class="pull-right col-xs-6 col-sm-6 col-md-6">
-      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="javascript:history.go(-1);">
+      <button type="button" class="btn btn-warning pull-right btn-lg" onclick="atrasbus()" >
           <span class="">Atras</span>
       </button>
+      
     </div>
   </div>
 </form>
 </div>
 
 </div>
+
 </body>
 </html>

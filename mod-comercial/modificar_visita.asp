@@ -17,28 +17,26 @@ Response.CharSet = "UTF-8"%>
   <!--#include file="menu.asp"-->
   <!--#include file="funciones.asp"-->
   <div class="progress progress-striped active">
-  <div class="progress-bar" role="progressbar"
-       aria-valuenow="45" aria-valuemin="20" aria-valuemax="100"
-       style="width: 100%">
+  <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="20" aria-valuemax="100" style="width: 100%">
     <span class="sr-only">100% completado</span>
   </div>
 </div>
 <%
-  Dim gc_id, gc_hora, gc_fec, gc_est, gc_emp, gc_pre, gc_cli, gc_cli_cto, gc_des
+  Dim gc_id, gc_hora, gc_fec, gc_est, gc_com, gc_pre, gc_cli, gc_cli_cto, gc_des, gc_usu
     
     gc_id=request.form("modv_ges_com_id")
     gc_hora=request.form("modv_hora")
-    gc_fec=request.form("modv_fecha")
+    gc_fec=CDate(request.form("modv_fecha"))
     cad_est=request.form("modv_estado")
     cad_est=split(cad_est, "&")
     on error resume next
     gc_est=cad_est(0)
     gc_est=cstr(gc_est)
-    cad_emp=request.form("modv_com")
-    cad_emp=split(cad_emp, "&")
+    cad_com=request.form("modv_com")
+    cad_com=split(cad_com, "&")
     on error resume next
-    gc_emp=cad_emp(0)
-    gc_emp=cstr(gc_emp)
+    gc_com=cad_com(0)
+    gc_com=cstr(gc_com)
     gc_pre=request.form("modv_pre")
     gc_cli=request.form("modv_idcli")
     cad_cli_cto=request.form("modv_nomcto")
@@ -47,9 +45,11 @@ Response.CharSet = "UTF-8"%>
     gc_cli_cto=cad_cli_cto(0)
     gc_cli_cto=cstr(gc_cli_cto)
     gc_des=request.form("modv_desc")
+    gc_usu=session("emp_id")
+    
 
+  call mod_visita(gc_id,gc_hora,gc_fec,gc_est,gc_com,gc_pre,gc_cli,gc_cli_cto,gc_des,gc_usu)
 
-  call mod_visita(gc_id,gc_hora,gc_fec, gc_est,gc_emp,gc_pre,gc_cli,gc_cli_cto,gc_des)
 %>
 
 
