@@ -54,7 +54,7 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 	
 	<div class="form-group col-lg-4">
 		<label for="prov">Provincia</label>
-		<select class="form-control" id="prov" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value" onselect="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
+		<select class="form-control" id="provincia" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value" onselect="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
   			<option value=0>Seleccione una provincia</option>
   			<%
 	  			SQL_prov="select * from PROV order by prov_nom asc"
@@ -64,16 +64,16 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 				do while not RS_prov.eof
 				prov_nom = RS_prov("prov_nom")
 				prov_id = RS_prov("prov_id")
-				p = request.querystring("prov_nom")
-				pro="Cadiz"
-				    if p <> "" then
-				    	if p = prov_nom then
+				p = cint(request.querystring("provincia"))
+				pro=11
+				    if p <> 0 then
+				    	if p = prov_id then
 					    response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
-				        elseif p <> prov_nom then
+				        elseif p <> prov_id then
 				        response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
 				        end if
 					else
-						if pro = prov_nom then
+						if pro = prov_id then
 
 						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
 						else
@@ -93,63 +93,64 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 	<div class="form-group col-lg-4">
 		<label for="pob">Poblaci&oacuten</label>
 		<select class="form-control" id="poblacion" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
-			<option >Seleccione una poblaci&oacuten</option>
+			<option value=0>Seleccione una poblaci&oacuten</option>
 			<% 
-				if request.querystring("provincia") <> "" then
+				if cint(request.querystring("provincia")) <> 0 then
 
-		 		SQL_pob="select * from POB where pob_prov="&request.querystring("provincia")&"order by pob_nom asc"
-				set RS_pob=createobject("ADODB.Recordset")
-				RS_pob.open SQL_pob,Conexion
+			 		SQL_pob="select * from POB where pob_prov="&request.querystring("provincia")&" order by pob_nom asc"
+			 		response.write SQL_pob
+					set RS_pob=createobject("ADODB.Recordset")
+					RS_pob.open SQL_pob,Conexion
 
-				do while not RS_pob.eof
-				pob_nombre=RS_pob("pob_nom")
-				cadena=Server.URLEncode(pob_nombre)
-				pob_id=RS_pob("pob_id")
-				pob_prov=RS_pob("pob_prov")
-				pp = request.querystring("pob_nombre")
-				pobprov="11"
-				
-				    if pp <> "" then
-				    	if pp = pob_nombre then
-					    response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
-				        elseif pp <> pob_nombre then
-				        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
-				        end if
-					else
-							response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
+					do while not RS_pob.eof
+					pob_nombre=RS_pob("pob_nom")
+					cadena=Server.URLEncode(pob_nombre)
+					pob_id=RS_pob("pob_id")
+					pob_id=cstr(pob_id)
+					pob_prov=RS_pob("pob_prov")
+					pp = request.querystring("poblacion")
 					
-					end if
-		
-  				RS_pob.movenext
-  				loop
-  				RS_pob.close
+					    if pp <> 0 then
+					    	if pp = pob_id then
+						    response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"-</option>"
+					        elseif pp <> pob_id then
+					        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"--</option>"
+					        end if
+						else
+							response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"---</option>"
+						
+						end if
+				
+	  				RS_pob.movenext
+	  				loop
+	  				RS_pob.close
   				else
-  				SQL_pob="select * from POB where pob_prov=11 order by pob_nom asc"
-				set RS_pob=createobject("ADODB.Recordset")
-				RS_pob.open SQL_pob,Conexion
+	  				SQL_pob="select * from POB where pob_prov=11 order by pob_nom asc"
+					set RS_pob=createobject("ADODB.Recordset")
+					RS_pob.open SQL_pob,Conexion
 
-				do while not RS_pob.eof
-				pob_nombre=RS_pob("pob_nom")
-				cadena=Server.URLEncode(pob_nombre)
-				pob_id=RS_pob("pob_id")
-				pob_prov=RS_pob("pob_prov")
-				pp = request.querystring("pob_nombre")
-				pobprov="11"
-				
-				    if pp <> "" then
-				    	if pp = pob_nombre then
-					    response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
-				        elseif pp <> pob_nombre then
-				        response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
-				        end if
-					else
-							response.write "<option value="&pob_id&"&pob_nombre="&cadena&" >"&pob_nombre&"</option>"
+					do while not RS_pob.eof
+					pob_nombre=RS_pob("pob_nom")
+					cadena=Server.URLEncode(pob_nombre)
+					pob_id=RS_pob("pob_id")
+					pob_prov=RS_pob("pob_prov")
+					'pp = cint(request.querystring("poblacion"))
 					
-					end if
-		
-  				RS_pob.movenext
-  				loop
-  				RS_pob.close
+					
+					    ''if pp <> 0 then
+					    	'if pp = pob_id then
+						   '' response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&".</option>"
+					       '' elseif pp <> pob_id then
+					       '' response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"..</option>"
+					      ''  end if
+						'else
+							response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"...</option>"
+						
+						'end if
+
+	  				RS_pob.movenext
+	  				loop
+	  				RS_pob.close
 
 
   				end if

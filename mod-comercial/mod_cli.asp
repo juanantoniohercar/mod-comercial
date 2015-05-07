@@ -33,7 +33,7 @@ Response.CharSet = "UTF-8"%>
 		id_cli=request.querystring("id")
 		id_prov=request.querystring("provincia")
 		 call datos_cli_cto(id_cli, "CLI")
-		idprov = CStr(idprov)
+		'idprov = CStr(idprov)
 
 		bus_dnicif=request.querystring("bus_dnicif")
 		bus_nombre=request.querystring("bus_nombre")
@@ -129,7 +129,7 @@ Response.CharSet = "UTF-8"%>
 		<label for="prov">Provincia</label>
 		<select class="form-control" id="prov" name="provincia" onchange="<%=texto_prov%>">
  			<option value="" label="Seleciona una provincia"></option>
- 			<option value="<%=idprov%>" selected><%=prov%></option>
+ 			<!--<option value="<%=idprov%>" selected><%=prov%></option>-->
 
  			<%
 	 			SQL_prov="select * from PROV order by prov_nom asc"
@@ -139,13 +139,13 @@ Response.CharSet = "UTF-8"%>
 				do while not RS_prov.eof
 				prov_nom = RS_prov("prov_nom")
 				prov_id = RS_prov("prov_id")
-				p = request.querystring("prov_nom")
-				response.write p
+				prov_id = CStr(prov_id)
+				p = request.querystring("provincia")
 				
-				if prov <> prov_nom then
-					if p = prov_nom then
+				if idprov <> prov_id then
+					if p = prov_id then
 						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&" selected>"&prov_nom&"</option>"
-					elseif p <>prov_nom then
+					elseif p <> prov_id then
 						response.write "<option value="&prov_id&"&prov_nom="&prov_nom&">"&prov_nom&"</option>"
 					end if
 				else
@@ -183,12 +183,13 @@ Response.CharSet = "UTF-8"%>
 				pob_nombre=RS_pob("pob_nom")
 				cadena=Server.URLEncode(pob_nombre)
 				pob_id=RS_pob("pob_id")
-				pp = request.querystring("pob_nombre")
+				pob_id=CStr(pob_id)
+				pp = request.querystring("poblacion")
 				
-				if pob <> pob_nombre then
-					if pp = pob_nombre then
+				if idpob <> pob_id then
+					if pp = pob_id then
 						response.write "<option value="&pob_id&"&pob_nombre="&cadena&" selected>"&pob_nombre&"</option>"
-					elseif pp <>pob_nombre then
+					elseif pp <>pob_id then
 						response.write "<option value="&pob_id&"&pob_nombre="&cadena&">"&pob_nombre&"</option>"
 					end if	 
 				
