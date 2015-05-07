@@ -28,31 +28,33 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 	<% autorizar session("autorizacion") %>
 	
 <div class="container">
-	<h3>Nuevo Cliente</h3>
-	<hr color="DFDCDC">
+	<div class="form-group col-xs-12 col-sm-12 col-md-12">
+		<h3>Nuevo Cliente</h3>
+		<hr color="DFDCDC">
+	</div>
 	
 <form action="ins_cli.asp" method="POST" name="form_nuevo_cli" class="form-horizontal" onsubmit="return validacioncli()">
 
 	
 
-	<div class="form-group col-lg-2">
+	<div class="form-group col-xs-12 col-sm-3 col-md-2">
 		<label for="codigo_cliente">C&oacutedigo Cliente</label>
 		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=generar_cod("CLI","cli_id")%>" readonly>
 	</div> 
-	<div class="form-group col-lg-2">
+	<div class="form-group col-xs-12 col-sm-4 col-md-2">
 		<label for="cif">N. I. F. / C. I. F.</label>
 		<input type="text" class="form-control" id="cif" placeholder="N. I. F. / C. I. F." maxlength="9" name="cif" onblur="comprobarNifCif(document.getElementById('cif').value)" value='<%=request.querystring("cif")%>' required>
 	</div> 
-	<div class="form-group col-lg-5">
+	<div class="form-group col-xs-12 col-sm-5 col-md-5">
 		<label for="nombre">Nombre</label>
 		<input type="text" class="form-control" id="nombre" placeholder="NOMBRE" maxlength="50" name="nombre" value='<%=request.querystring("nombre")%>' required>
 	</div>
-	<div class="form-group col-lg-6">
+	<div class="form-group col-xs-12 col-sm-8 col-md-6">
 		<label for="direccion">Direcci&oacuten</label>
 		<input type="text" class="form-control" id="direccion" placeholder="DIRECCIÓN" maxlength="100" name="direccion" value='<%=request.querystring("direccion")%>' required>
 	</div>
 	
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-4 col-md-4">
 		<label for="prov">Provincia</label>
 		<select class="form-control" id="provincia" name="provincia" onchange="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value" onselect="location.href='nue_cli.asp?provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
   			<option value=0>Seleccione una provincia</option>
@@ -90,7 +92,7 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 		</select>
 			
 	</div>
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-5 col-md-4">
 		<label for="pob">Poblaci&oacuten</label>
 		<select class="form-control" id="poblacion" name="poblacion" onchange="location.href='nue_cli.asp?poblacion=' + form_nuevo_cli.poblacion.options[form_nuevo_cli.poblacion.selectedIndex].value + '&provincia=' + form_nuevo_cli.provincia.options[form_nuevo_cli.provincia.selectedIndex].value + '&cif=' + form_nuevo_cli.cif.value + '&nombre=' + form_nuevo_cli.nombre.value + '&direccion=' + form_nuevo_cli.direccion.value + '&tlf_cli=' + form_nuevo_cli.tlf_cli.value">
 			<option value=0>Seleccione una poblaci&oacuten</option>
@@ -174,16 +176,16 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
   				RS_cp.close
 				end if	
 			%>
-	<div class="form-group col-lg-3">
+	<div class="form-group col-xs-12 col-sm-3 col-md-2">
 		<label for="codigo_postal">C&oacutedigo Postal</label>
 		<input type="text" class="form-control" id="codigo_postal" name="cp" placeholder="CP" maxlength="5"  value="<%=pob_cp%>" disabled>
 	</div>
 	
- 	<div class="form-group col-lg-3">
+ 	<div class="form-group col-xs-12 col-sm-3 col-md-3">
  		<label for="telefono">Tel&eacutefono</label>
  		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value='<%=request.querystring("tlf_cli")%>' required>
  	</div>
- 	<div class="form-group col-lg-12"><br>
+ 	<div class="form-group col-xs-12 col-sm-12 col-md-12"><br>
  		<h3>Contacto</h3>
 		<hr class="" color="DFDCDC">
 		<button type="button" class="btn btn-success btn-xs" onclick="crear_div()">
@@ -195,7 +197,7 @@ Response.CharSet = "UTF-8"%><!DOCTYPE html>
 	</div>
 
 	<input type="hidden" id="id_cto0" name="id_cto0" value="<%=generar_cod("CLI_CTO","cc_id")%>">
-			<div class="form-group" id="div_nomcto" ></div>
+			<div class="form-group "  id="div_nomcto" ></div>
 	
 	<div class="form-group"  id="div_submit">
 		<div class="col-xs-6 col-sm-6 col-md-6">

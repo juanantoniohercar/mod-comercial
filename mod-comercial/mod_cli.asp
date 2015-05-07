@@ -42,8 +42,10 @@ Response.CharSet = "UTF-8"%>
 		
 	%>
 <div class="container">
-	<h3>Cliente a modificar</h3>
-	<hr color="DFDCDC">
+	<div class="form-group col-xs-12 col-sm-12 col-md-12">
+		<h3>Cliente a modificar</h3>
+		<hr color="DFDCDC">
+	</div>
 	<%
 	 						if bus_dnicif <> "" then
 	 					%>
@@ -108,24 +110,24 @@ Response.CharSet = "UTF-8"%>
 	 					%>
 <form action="modificar_cli.asp" method="POST" name="form_modificar_cli" class="form-horizontal" onsubmit="return validacioncli()" >
 
-	<div class="form-group col-lg-2">
+	<div class="form-group col-xs-12 col-sm-3 col-md-2">
 		<label for="codigo_cliente">C&oacutedigo Cliente</label>
 		<input type="text" class="form-control" id="codigo_cliente" name="codigo_cliente" placeholder="Codigo" maxlength="9" value="<%=cod%>" readonly required>
 	</div> 
-	<div class="form-group col-lg-2">
+	<div class="form-group col-xs-12 col-sm-4 col-md-2">
 		<label for="cif">N. I. F. / C. I. F.</label>
 		<input type="text" class="form-control" id="cif" placeholder="N. I. F. / C. I. F." maxlength="9" name="cif" value="<%=dnicif%> " onblur="comprobarNifCif(document.getElementById('cif').value)" required>
 	</div> 
-	<div class="form-group col-lg-5">
+	<div class="form-group col-xs-12 col-sm-5 col-md-5">
 		<label for="nombre">Nombre</label>
 		<input type="text" class="form-control" id="nombre" placeholder="NOMBRE" maxlength="50" name="nombre" value="<%=nombre%>" required>
 	</div>
-	<div class="form-group col-lg-6">
+	<div class="form-group col-xs-12 col-sm-8 col-md-6">
 		<label for="direccion">Direcci&oacuten</label>
 		<input type="text" class="form-control" id="direccion" placeholder="DIRECCIÓN" maxlength="100" name="direccion" value="<%=direccion%>" required>
 	</div>
 	
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-4 col-md-4">
 		<label for="prov">Provincia</label>
 		<select class="form-control" id="prov" name="provincia" onchange="<%=texto_prov%>">
  			<option value="" label="Seleciona una provincia"></option>
@@ -159,7 +161,7 @@ Response.CharSet = "UTF-8"%>
 		</select>
 			
 	</div>
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-5 col-md-4">
 		<label for="pob">Poblaci&oacuten</label>
 		<select title= "Seleccione una poblacion" class="form-control" id="poblacion" name="poblacion" onchange="<%=texto_pob%>">
 			<option value="" label="Seleciona una población"></option>
@@ -219,23 +221,23 @@ Response.CharSet = "UTF-8"%>
  				RS_cp.close				
  				end if	
 			%>
-	<div class="form-group col-lg-2">
+	<div class="form-group col-xs-12 col-sm-3 col-md-2">
 		<label for="codigo_postal">C&oacutedigo Postal</label>
 		<input type="text" class="form-control" id="codigo_postal" name="cp" placeholder="CP" maxlength="5" value="<%=pob_cp%>" disabled>
 	</div>
 	
- 	<div class="form-group col-lg-3">
+ 	<div class="form-group col-xs-12 col-sm-3 col-md-3">
  		<label for="telefono">Tel&eacutefono</label>
  		<input type="tel" class="form-control" id="telefono" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cli" value="<%=tlf%>" required>
  	</div>
-	<div class="form-group col-lg-9">
+	<div class="form-group col-xs-12 col-sm-9 col-md-9">
 		<button type="submit" name="modificar_cliente" class="btn btn-primary btn-lg">
 			<span>Modificar Cliente</span>
 		</button>
 		
 	</div>
 </form>
-<div class="form-group col-lg-12"><br>
+<div class="form-group col-xs-12 col-sm-12 col-md-12"><br>
  		<h3>Contacto a modificar</h3>
 		<hr class="" color="DFDCDC">
 		<button type="button" class="btn btn-primary btn-xs" onclick="mostrar_btn_mod()">
@@ -252,7 +254,7 @@ Response.CharSet = "UTF-8"%>
   		<input type="hidden" id="valor_idprov" maxlength="50" name="valor_idprov" value="<%=request.querystring("provincia")%>">
   		<input type="hidden" id="valor_idpob" maxlength="50" name="valor_idpob" value="<%=request.querystring("poblacion")%>">
 
-		<div class="form-group col-lg-5">
+		<div class="form-group col-xs-12 col-sm-5 col-md-5">
 		<label for="nombre_cto">Filtro por Nombre</label>
 		<div class="form-inline">
 		<select class="form-control" id="nombre_cto" name="nombre_cto" onchange= "<%=texto_cto%>">
@@ -264,16 +266,16 @@ Response.CharSet = "UTF-8"%>
 	<% call datos_cto()%>
 	
 	<div class="form-group"></div>
-	<div class="form-group col-lg-5">
+	<div class="form-group col-xs-12 col-sm-5 col-md-5">
 		<label for="nombre_cto">Nombre</label>
 		<input type="hidden" name="idcontacto" value="<%=id_cont%>">
 	<input type="text" class="form-control" id="nombrecto" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombrecto" value='<%=nombrecto%>'>
 	</div>
-	<div class="form-group col-lg-3">
+	<div class="form-group col-xs-12 col-sm-3 col-md-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
  		<input type="tel" class="form-control" id="telefono_cto" placeholder="Teléfono o móvil" maxlength="9" name="tlf_cto" value='<%=tlf_cto%>'>
 	</div>
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-4 col-md-4">
 		<label for="email_cto">E-mail</label>
 		<input type="email" class="form-control" id="email_cto" placeholder="email@ejemplo.com" name="email_cto" value='<%=email_cto%>'>
 	</div>
@@ -298,17 +300,17 @@ Response.CharSet = "UTF-8"%>
 		<input type="hidden" id="valor_idcli" maxlength="50" name="valor_idcli2" value="<%=request.querystring("id")%>">
   		<input type="hidden" id="valor_idprov" maxlength="50" name="valor_idprov2" value="<%=request.querystring("provincia")%>">
   		<input type="hidden" id="valor_idpob" maxlength="50" name="valor_idpob2" value="<%=request.querystring("poblacion")%>">
-	<div class="form-group col-lg-5">
+	<div class="form-group col-xs-12 col-sm-5 col-md-5">
 		<label for="nombre_cto">Nombre</label>
 		<input type="hidden" name="idcontacto" value="<%=generar_cod("CLI_CTO","cc_id")%>">
 		<input type="hidden" name="idcontacto_cli" value="<%=id_cli%>">
 	<input type="text" class="form-control" placeholder="NOMBRE Y APELLIDOS" maclength="45" name="nombcto" required>
 	</div>
-	<div class="form-group col-lg-3">
+	<div class="form-group col-xs-12 col-sm-3 col-md-3">
 		<label for="telefono_cto">Tel&eacutefono</label>
  		<input type="tel" class="form-control" placeholder="Teléfono o móvil" maxlength="9" name="telcto" >
 	</div>
-	<div class="form-group col-lg-4">
+	<div class="form-group col-xs-12 col-sm-4 col-md-4">
 		<label for="email_cto">E-mail</label>
 		<input type="email" class="form-control" placeholder="email@ejemplo.com" name="mailcto" >
 	</div>

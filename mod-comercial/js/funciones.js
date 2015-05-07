@@ -87,15 +87,15 @@ function comprobarNifCif(abc){
 			//crea div
 			var div1 = document.createElement('div');
 			div1.setAttribute("id", "div_nomcto" + cont);
-			div1.setAttribute("class", "col-lg-5 pull-left");
+			div1.setAttribute("class", "col-xs-12 col-sm-5 col-md-5 pull-left");
 			
 			var div2 = document.createElement('div');
 			div2.setAttribute("id", "div_telcto" + cont);
-			div2.setAttribute("class", "col-lg-3 pull-left");
+			div2.setAttribute("class", "col-xs-12 col-sm-3 col-md-3 pull-left");
 			
 			var div3 = document.createElement('div');
 			div3.setAttribute("id", "div_emailcto" + cont);
-			div3.setAttribute("class", "col-lg-4 pull-left");
+			div3.setAttribute("class", "col-xs-12 col-sm-4 col-md-4 pull-left");
 
 			document.getElementById('div_nomcto').appendChild(div1);
 			document.getElementById('div_nomcto').appendChild(div2);
